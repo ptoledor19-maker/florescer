@@ -445,6 +445,7 @@ function applyMyData(){
   try{ localStorage.setItem(KEY+'.backup', JSON.stringify(S)); }catch(e){}
   S.demo=false;
   S.holdings=JSON.parse(JSON.stringify(MY_DATA));
+  S.holdings.forEach(h=>{ h.baseValue=h.current; h.since='2026-09-09'; }); // posição do extrato
   S.dataVersion=DATA_VERSION;
   if(S.profile.monthlyContribution===2500) S.profile.monthlyContribution=3000; // seu aporte mensal
   if(!S.profile.targetAllocation) S.profile.targetAllocation=Object.assign({},DEFAULT_TARGET);
@@ -479,6 +480,110 @@ function startFresh(){
   save(); renderAll();
 }
 function wipeAll(){ try{localStorage.removeItem(KEY);}catch(e){} S=seed(); save(); renderAll(); }
+/* ---------- taxas de referência (Banco Central · SGS) e rendimento automático ---------- */
+const TAXAS_FALLBACK={cdi:13.90, selic:14.00, ipca12:4.44, em:'09/09/2026', fonte:'Banco Central (SGS)'};
+const SGS={cdi:4389, selic:432, ipca12:13522};
+function taxas(){ return Object.assign({},TAXAS_FALLBACK,S.taxas||{}); }
+// consulta as séries oficiais do BC. Se falhar, mantém as últimas conhecidas — nunca inventa taxa.
+async function fetchTaxas(silent){
+  const base='https://api.bcb.gov.br/dados/serie/bcdata.sgs.';
+  const get=async code=>{
+    const r=await fetch(base+code+'/dados/ultimos/1?formato=json');
+    if(!r.ok) throw new Error('http '+r.status);
+    const j=await r.json();
+    if(!j || !j.length) throw new Error('sem dados');
+    return {v:parseFloat(String(j[0].valor).replace(',','.')), d:j[0].data};
+  };
+  try{
+    const [c,se,ip]=await Promise.all([get(SGS.cdi),get(SGS.selic),get(SGS.ipca12)]);
+    S.taxas={cdi:c.v, selic:se.v, ipca12:ip.v, em:c.d, fonte:'Banco Central (SGS)', fetchedAt:new Date().toISOString()};
+    accrueAll(); save(); renderAll();
+    if(!silent) toast('Taxas atualizadas · CDI '+String(c.v).replace('.',',')+'% a.a. 🌸');
+    return true;
+  }catch(e){
+    if(!silent) toast('Não consegui falar com o Banco Central agora. Mantive as últimas taxas conhecidas.');
+    return false;
+  }
+}
+const RATE_KINDS=[
+  {k:'pre',  label:'Prefixado',   unit:'% a.a.',    hint:'Taxa fixa combinada. Ex.: 13'},
+  {k:'cdi',  label:'% do CDI',    unit:'% do CDI',  hint:'Ex.: 110 para 110% do CDI'},
+  {k:'ipca', label:'IPCA +',      unit:'% a.a.',    hint:'A parte fixa. Ex.: 6 para IPCA + 6%'},
+  {k:'selic',label:'Selic +',     unit:'% a.a.',    hint:'A parte fixa acima da Selic'},
+  {k:'none', label:'Não rende sozinho', unit:'',    hint:'O valor só muda quando você editar'},
+];
+function toNum(v){ if(v==null) return null; const x=parseFloat(String(v).replace(',','.')); return isFinite(x)?x:null; }
+// descobre como o investimento rende: usa os campos explícitos e, se não houver, lê o texto da taxa
+function rateSpec(h){
+  if(h.rateKind==='none') return null;
+  if(h.rateKind && toNum(h.rateNum)!=null) return {kind:h.rateKind, num:toNum(h.rateNum)};
+  const s=(h.rate||'').toString().toUpperCase();
+  if(!s || s==='—') return null;
+  if(s.includes('IPCA')){ const m=s.match(/IPCA\s*\+?\s*(\d+[.,]?\d*)/); return m?{kind:'ipca',num:toNum(m[1])}:null; }
+  if(s.includes('SELIC')){ const m=s.match(/SELIC\s*\+?\s*(\d+[.,]?\d*)/); return {kind:'selic',num:m?toNum(m[1]):0}; }
+  const m=s.match(/(\d+[.,]?\d*)/); const num=m?toNum(m[1]):null;
+  if(num==null) return null;
+  if(s.includes('CDI')) return {kind:'cdi',num};
+  if(s.includes('A.A')||s.includes('AA')||s.includes('%')) return {kind:'pre',num};
+  return null;
+}
+function annualRate(spec){
+  const t=taxas(); if(!spec||spec.num==null) return null;
+  if(spec.kind==='pre')   return spec.num/100;
+  if(spec.kind==='cdi')   return (t.cdi/100)*(spec.num/100);
+  if(spec.kind==='selic') return (t.selic/100)+(spec.num/100);
+  if(spec.kind==='ipca')  return (1+t.ipca12/100)*(1+spec.num/100)-1;
+  return null;
+}
+function rateLabel(h){
+  const sp=rateSpec(h); const r=annualRate(sp); if(r==null) return null;
+  const t=taxas(); const n=v=>String(Math.round(v*100)/100).replace('.',',');
+  if(sp.kind==='pre')   return `${n(sp.num)}% a.a. (prefixado)`;
+  if(sp.kind==='cdi')   return `${n(sp.num)}% do CDI · CDI hoje ${n(t.cdi)}% → ${n(r*100)}% a.a.`;
+  if(sp.kind==='selic') return `Selic + ${n(sp.num)}% · Selic hoje ${n(t.selic)}% → ${n(r*100)}% a.a.`;
+  if(sp.kind==='ipca')  return `IPCA + ${n(sp.num)}% · IPCA 12m ${n(t.ipca12)}% → ${n(r*100)}% a.a.`;
+  return null;
+}
+// só renda fixa/caixa rende sozinho. Ações, ETFs, fundos e cripto dependem de preço de mercado: nunca projetamos.
+function canAccrue(h){ return (h.klass==='Renda Fixa'||h.klass==='Caixa') && annualRate(rateSpec(h))!=null && h.since; }
+function accrue(h){
+  const base=(h.baseValue!=null? +h.baseValue : +h.current)||0;
+  if(!canAccrue(h) || !base) return base;
+  const r=annualRate(rateSpec(h));
+  const start=new Date(h.since+'T00:00');
+  let end=new Date();
+  if(h.maturity){ const m=new Date(h.maturity+'T00:00'); if(m<end) end=m; } // para de render no vencimento
+  const days=(end-start)/86400000;
+  if(!(days>0)) return base;
+  return base*Math.pow(1+r, days/365);
+}
+function accrueAll(){
+  S.holdings.forEach(h=>{
+    if(h.baseValue==null){ h.baseValue=+h.current||0; }
+    if(!h.since){ h.since=todayISO(); }
+    const v=accrue(h);
+    if(isFinite(v)&&v>=0) h.current=Math.round(v*100)/100;
+  });
+}
+// quando você informa o valor real do banco, ele vira a nova base e a contagem recomeça dali
+function setBase(h,valor,quando){ h.baseValue=valor; h.current=valor; h.since=quando||todayISO(); }
+function rateText(kind,num){
+  if(!kind||kind==='none'||num==null||num==='') return '—';
+  const n=String(num).replace('.',',');
+  if(kind==='pre') return n+'% a.a.';
+  if(kind==='cdi') return n+'% do CDI';
+  if(kind==='ipca') return 'IPCA + '+n+'%';
+  if(kind==='selic') return 'Selic + '+n+'%';
+  return '—';
+}
+function isRF(type){ return ['CDB','Tesouro Direto','LCI/LCA','Caixa','Outro'].includes(type); }
+function dBR(iso){ if(!iso) return '—'; try{ return new Date(iso+'T00:00').toLocaleDateString('pt-BR'); }catch(e){ return iso; } }
+function taxasNota(){
+  const t=taxas();
+  const n=v=>String(Math.round(v*100)/100).replace('.',',');
+  return `Taxas de referência: CDI ${n(t.cdi)}% · Selic ${n(t.selic)}% · IPCA 12m ${n(t.ipca12)}% — ${esc(t.fonte)}, dado de ${esc(t.em)}.`;
+}
+
 /* ---------- derived metrics ---------- */
 const CLASSES=['Renda Fixa','Fundos','ETFs','Caixa'];
 const classColor={'Renda Fixa':'var(--c1)','Fundos':'var(--c2)','ETFs':'var(--c3)','Caixa':'var(--c4)','Ações':'var(--c5)','Outros':'var(--c6)'};
@@ -862,7 +967,8 @@ function carteiraRF(){
     <div style="font-family:var(--fdisplay);font-size:30px;font-weight:600" class="tnum">${BRL(tot)}</div>
     <div style="font-size:12.5px;color:var(--ink-2);margin-top:4px">${(tot/total()*100).toFixed(0)}% da carteira · o alicerce da investidora conservadora 🌷</div></div>
   ${alertHtml}
-  ${rf.map(rfCard).join('')}`;
+  ${rf.map(rfCard).join('')}
+  <div class="footer-note">${taxasNota()} <span class="tiny-link" onclick="fetchTaxas()">Atualizar agora</span></div>`;
 }
 function rfCard(h){
   const dd=daysTo(h.maturity);
@@ -878,6 +984,7 @@ function rfCard(h){
     <div style="border-top:1px solid var(--line);margin-top:10px;padding-top:6px">
       ${h.noInvested? row('Valor aplicado','—') : row('Valor investido',BRL(h.invested))}
       ${h.rend12!=null? row('Rendimento em 12 meses',BRL(h.rend12)) : ''}
+      ${canAccrue(h)? row('Rendendo a', rateLabel(h)) : ''}
       ${row('Rentabilidade contratada',esc(h.rate))}
       ${row('Modalidade',esc(h.modalidade||''))}
       ${row('Indexador',esc(h.indexador||''))}
@@ -886,6 +993,7 @@ function rfCard(h){
       ${row('Emissor',esc(h.issuer))}
       ${row('Cobertura FGC', h.fgc? '✅ Sim (até R$ 250 mil por CPF/instituição)':'❌ Não (Tesouro tem garantia do Governo)')}
     </div>
+    ${canAccrue(h)?`<div class="alertbox i" style="margin:10px 0 0"><div class="ai">📈</div><div><p style="color:var(--ink);margin:0"><b>Valor estimado, rendendo sozinho.</b> Partindo de ${BRL(h.baseValue)} informados em ${dBR(h.since)}. Quando você conferir o extrato do banco, toque em Editar e coloque o valor real — a contagem recomeça dali.</p></div></div>`:''}
     ${h.noInvested?`<div style="font-size:11px;color:var(--ink-3);margin-top:8px">O extrato não trouxe o valor originalmente aplicado, então a rentabilidade desta posição ainda não é calculada. Você pode preencher tocando em Editar.</div>`:''}
     <button class="btn ghost" style="margin-top:10px;padding:9px;font-size:13px" onclick="openEditHolding('${esc(h.id)}')">✏️ Editar</button>
   </div>`;
@@ -993,6 +1101,8 @@ function openAporte(existing){
 function syncAporteFields(){
   const v=$('#ap-value'); if(v) aporteDraft.value=v.value;
   const n=$('#ap-name'); if(n) aporteDraft.name=n.value;
+  const rn=$('#ap-ratenum'); if(rn) aporteDraft.rateNum=rn.value;
+  const mt=$('#ap-maturity'); if(mt) aporteDraft.maturity=mt.value;
   const dt=$('#ap-date'); if(dt) aporteDraft.date=dt.value;
   const nt=$('#ap-note'); if(nt) aporteDraft.note=nt.value;
 }
@@ -1018,6 +1128,19 @@ function renderAporteSheet(){
     <div class="field"><label>Qual o produto? (opcional)</label>
       <div class="box"><input id="ap-name" type="text" placeholder="Ex: CDB 110% CDI, IVVB11..." value="${esc(d.name)}"></div></div>
 
+    ${isRF(d.type)?`
+    <div class="field"><label>Como ele rende?</label>
+      <div class="opts">${RATE_KINDS.map(rk=>`<button class="opt ${d.rateKind===rk.k?'on':''}" onclick="syncAporteFields();aporteDraft.rateKind='${rk.k}';renderAporteSheet()">${rk.label}</button>`).join('')}</div>
+      <div style="font-size:11px;color:var(--ink-3);margin-top:6px">O app usa isso pra ir atualizando o rendimento sozinho, todo dia, com o CDI oficial do Banco Central.</div></div>
+
+    ${d.rateKind&&d.rateKind!=='none'?`
+    <div class="field"><label>Taxa contratada</label>
+      <div class="box"><input id="ap-ratenum" type="number" step="0.01" inputmode="decimal" placeholder="${esc((RATE_KINDS.find(x=>x.k===d.rateKind)||{}).hint||'')}" value="${d.rateNum!=null?d.rateNum:''}"><span>${esc((RATE_KINDS.find(x=>x.k===d.rateKind)||{}).unit||'')}</span></div></div>`:''}
+
+    <div class="field"><label>Vencimento (opcional)</label>
+      <div class="box"><input id="ap-maturity" type="date" value="${d.maturity||''}"></div></div>
+    `:''}
+
     <div class="field"><label>Data do aporte</label>
       <div class="box"><input id="ap-date" type="date" value="${d.date}"></div></div>
 
@@ -1032,6 +1155,8 @@ function submitAporte(){
   const v=parseFloat(($('#ap-value')?.value||'').replace(',','.'))||0;
   aporteDraft.value=v;
   aporteDraft.name=$('#ap-name')?.value||'';
+  if($('#ap-ratenum')) aporteDraft.rateNum=$('#ap-ratenum').value;
+  if($('#ap-maturity')) aporteDraft.maturity=$('#ap-maturity').value;
   aporteDraft.date=$('#ap-date')?.value||todayISO();
   aporteDraft.note=$('#ap-note')?.value||'';
   const d=aporteDraft;
@@ -1045,10 +1170,12 @@ function submitAporte(){
   const klass=d.klass||'Outros';
   // merge into existing holding of same inst+name, else new
   let h=S.holdings.find(x=>x.inst===d.inst && x.name.toLowerCase()===(d.name||d.type).toLowerCase());
-  if(h){ h.invested+=v; h.current+=v; }
+  if(h){ h.invested+=v; h.baseValue=(h.baseValue!=null?+h.baseValue:+h.current)+v; h.current=h.baseValue; h.since=d.date||todayISO(); }
   else{
+    const rk=d.rateKind||null, rn=toNum(d.rateNum);
     h={id:'h'+Date.now(), inst:d.inst, klass, type:d.type, name:d.name||d.type, invested:v, current:v,
-       rate:'—', maturity:null, liquidity: klass==='Caixa'?'Diária':'—', issuer:d.inst, fgc: klass==='Renda Fixa',
+       baseValue:v, since:d.date||todayISO(), rateKind:rk, rateNum:rn, rate:rateText(rk,rn),
+       maturity:d.maturity||null, liquidity: klass==='Caixa'?'Diária':'—', issuer:d.inst, fgc: klass==='Renda Fixa',
        category:d.type, admFee:null, perfFee:0, health:'g'};
     S.holdings.push(h);
   }
@@ -1101,7 +1228,7 @@ function syncEditFields(){
   if(g('ed-name')) editDraft.name=g('ed-name').value;
   if(g('ed-current')) editDraft.current=g('ed-current').value;
   if(g('ed-invested')) editDraft.invested=g('ed-invested').value;
-  if(g('ed-rate')) editDraft.rate=g('ed-rate').value;
+  if(g('ed-ratenum')) editDraft.rateNum=g('ed-ratenum').value;
   if(g('ed-maturity')) editDraft.maturity=g('ed-maturity').value;
   if(g('ed-issuer')) editDraft.issuer=g('ed-issuer').value;
   if(g('ed-liquidity')) editDraft.liquidity=g('ed-liquidity').value;
@@ -1130,8 +1257,13 @@ function renderEditSheet(){
     <div class="field"><label>Tipo</label>
       <div class="opts">${types.map(t=>`<button class="opt ${d.type===t?'on':''}" onclick="syncEditFields();editDraft.type='${t}';editDraft.klass='${EDIT_KLASS[t]||'Outros'}';renderEditSheet()">${t}</button>`).join('')}</div></div>
 
-    <div class="field"><label>Rentabilidade contratada</label>
-      <div class="box"><input id="ed-rate" type="text" placeholder="Ex: 110% do CDI, IPCA + 6%" value="${esc(d.rate&&d.rate!=='—'?d.rate:'')}"></div></div>
+    <div class="field"><label>Como ele rende?</label>
+      <div class="opts">${RATE_KINDS.map(rk=>`<button class="opt ${(d.rateKind||(rateSpec(d)||{}).kind)===rk.k?'on':''}" onclick="syncEditFields();editDraft.rateKind='${rk.k}';renderEditSheet()">${rk.label}</button>`).join('')}</div></div>
+
+    ${(d.rateKind||(rateSpec(d)||{}).kind) && (d.rateKind||(rateSpec(d)||{}).kind)!=='none' ?`
+    <div class="field"><label>Taxa contratada</label>
+      <div class="box"><input id="ed-ratenum" type="number" step="0.01" inputmode="decimal" value="${d.rateNum!=null?d.rateNum:((rateSpec(d)||{}).num!=null?(rateSpec(d)||{}).num:'')}"><span>${esc((RATE_KINDS.find(x=>x.k===(d.rateKind||(rateSpec(d)||{}).kind))||{}).unit||'')}</span></div>
+      <div style="font-size:11px;color:var(--ink-3);margin-top:6px">A partir daqui o app atualiza o rendimento sozinho, usando o CDI/IPCA oficiais do Banco Central.</div></div>`:''}
 
     <div class="field"><label>Vencimento (deixe vazio se não tiver)</label>
       <div class="box"><input id="ed-maturity" type="date" value="${d.maturity||''}"></div></div>
@@ -1164,17 +1296,19 @@ function saveEditHolding(){
   const inv=invRaw===''? null : parseFloat(invRaw.replace(',','.'));
 
   h.name=(d.name||'').trim()||h.type||'Investimento';
-  h.current=cur;
+  setBase(h,cur,todayISO());
   if(inv!=null && inv>0){ h.invested=inv; delete h.noInvested; }
   else { h.invested=cur; h.noInvested=true; }
   h.inst=d.inst||h.inst;
   if(d.type){ h.type=d.type; h.klass=EDIT_KLASS[d.type]||h.klass||'Outros'; }
-  h.rate=(d.rate||'').trim()||'—';
+  const rk=d.rateKind||(rateSpec(h)||{}).kind||null, rn=toNum(d.rateNum);
+  h.rateKind=rk; h.rateNum=rn; h.rate=rateText(rk,rn);
   h.maturity=(d.maturity||'')||null;
   h.issuer=(d.issuer||'').trim()||h.inst;
   h.liquidity=(d.liquidity||'').trim()||'—';
   h.fgc=!!d.fgc;
 
+  accrueAll();
   const t=total();
   if(!S.history.length) S.history=[t]; else S.history[S.history.length-1]=t;
   save(); renderAll(); closeSheet();
@@ -1456,11 +1590,15 @@ function confirmImport(){
     const modalidade = r.modalidade && r.modalidade!=='—' ? r.modalidade : '';
     const indexador = r.indexador && r.indexador!=='—' ? r.indexador : '';
     const rate = (r.rate && r.rate!=='—') ? r.rate : (indexador || '—');
+    const sp = rateSpec({rate}); // lê "110,25% do CDI", "IPCA + 6%", "13% a.a." e já deixa pronto pra render sozinho
     return {id:'i'+Date.now()+i, inst:r.inst||'—', klass, type, name:nm,
-      invested, current, rate, maturity:normDate(r.maturity), liquidity: klass==='Caixa'?'Diária':'—',
+      invested, current, baseValue:current, since:todayISO(),
+      rateKind: sp?sp.kind:null, rateNum: sp?sp.num:null,
+      rate, maturity:normDate(r.maturity), liquidity: klass==='Caixa'?'Diária':'—',
       issuer:r.inst||'—', fgc: klass==='Renda Fixa', category: modalidade||type||klass,
       admFee:null, perfFee:0, health:'g', modalidade, indexador};
   });
+  accrueAll();
   const tot=total();
   S.history=[tot]; // start fresh series from imported total
   addXP(200);
@@ -1903,6 +2041,9 @@ function openSettings(){
       <button class="opt ${theme==='light'?'on':''}" onclick="setTheme('light')">Claro</button>
       <button class="opt ${theme==='dark'?'on':''}" onclick="setTheme('dark')">Escuro</button>
     </div></div>
+    <div class="field"><label>Taxas de referência</label>
+      <div class="alertbox i" style="margin:0"><div class="ai">🏦</div><div><p style="color:var(--ink);margin:0">${taxasNota()} São buscadas automaticamente toda vez que você abre o app e alimentam o rendimento automático dos seus investimentos pós-fixados.</p></div></div>
+      <button class="btn ghost" style="margin-top:8px;padding:9px;font-size:13px" onclick="fetchTaxas()">Atualizar taxas agora</button></div>
     <div class="alertbox i" style="margin:6px 0 14px"><div class="ai">🔒</div><div><p style="color:var(--ink);margin:0"><b>Privacidade.</b> Tudo fica só neste dispositivo (armazenamento local). Não pedimos senha, token ou login de banco. Você pode apagar tudo quando quiser.</p></div></div>
     <button class="btn sec" onclick="confirmFresh()">Começar do zero (limpar carteira)</button>
     <button class="btn ghost" style="margin-top:8px;color:var(--alert);border-color:var(--alert-bg)" onclick="confirmWipe()">Apagar todos os meus dados</button>
@@ -1939,14 +2080,15 @@ Object.assign(window,{setContribution:v=>{S.profile.monthlyContribution=Math.max
   toggleModoOportunidade:()=>{ S.profile.modoOportunidade=!S.profile.modoOportunidade; save(); renderIABody(); },
   openTargetAlloc,syncAporteFields,
   openEditHolding,renderEditSheet,syncEditFields,saveEditHolding,confirmDeleteHolding,deleteHolding,
-  undoMyData,dismissImportBanner,
+  undoMyData,dismissImportBanner,fetchTaxas,
   switchCarteira,switchPerf,switchIA,openAporte,submitAporte,handleFile,confirmImport,renderImportSheet,
   openEdu,completeEdu,showReport,openSettings,askAI,autogrow,resetDemo,startFresh,wipeAll});
 
 /* ---------- boot ---------- */
 (function boot(){
   try{ const t=localStorage.getItem('florescer.theme'); if(t&&t!=='auto') document.documentElement.setAttribute('data-theme',t); }catch(e){}
-  load(); ensureIds(); applyMyData(); renderAll();
+  load(); ensureIds(); applyMyData(); accrueAll(); save(); renderAll();
+  fetchTaxas(true); // busca as taxas do Banco Central em segundo plano; se falhar, segue com as últimas conhecidas
 })();
 </script>
 
