@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Florescer — meu app pessoal de investimentos: carteira consolidada, aportes, importação de extratos e educação financeira.">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" sizes="152x152" href="icon-152.png">
+<link rel="apple-touch-icon" sizes="167x167" href="icon-167.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<title>Florescer</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0BAMAAADP4xsBAAAAGFBMVEX76u776u366u7qzMbYorPJokvAcoypRGaKLFIsAAAEoElEQVR42u2bzW4URxCAq6cXhCIhNdq1D/iQBYEEOc1qLR8SH2x+JSQkELwAgkdAyrsgorxAFDhvRJYz9nqHG4dAVpyieAePOCHBTHMY2zt/1VM10yAjui+73dP7dXVV/1TV2OJX+FLFA4d2aId2aId2aIfOlg6jbzh5Oxx8CbTeGgOMdu4o6wrRozEAwPxxZB29G6Sf8RPb6AVxN7KM3j4E6t/souPni++fAqvoebYytop+mq18tImOc6bTgUX0PF8dW0QXxIztoYsaiCNr6LhmFi3QYbFhag0d1E6jMXpWbEhsoctWI61sClqXmyJL6JCgooboGWm0o+YsRCT121JIYgetI1rb0dJ1QlTS0ZJaE1fNd+Nff5tm/GYCjj14A2eFMozeP9zxb+AsnCKi9WSSrtpubeQSTtK7XQyHioAO/zjYDuFoYoQfgAH09uTqoBY9z3rm4WjnPogqrAJ4Mc6FOtFmjRnjgs+PhkX7YdOivAjMaP24NOtH76vIPz4qeVCjghByPT/0qzJlpwr9umIyL382SK2ftzn5PkUG9P+0zSCQ9t8N6KfEyBdp/4ijaS451cX3+IEE1Vv22B452Tv0uP4n3Qge1/+kX0hfSWoNrUv09S8w0R6nMKlVW7JAzdi3eol36FKL1T4kr4NmUhtvWXm3D+Cd9019uijatFzEpfTznGlqfZQmDb/q7SPFpqGTj6IFPluxcWgdXGypcB3gEklEtPzMDLcMrpEBYitcH0W0TzCQh2lEmtDoZCVlZ0mji7OseHd4rs89I1rcJqARqZeU2edbanxElaTygCZ2fSkJ5UEDsc9QhC6jxf169L8VbWuqPkzqbDRRR2+DEoGtqZqruuLiF3dIwZ14oLhocU3R4kZZZseoZ5eSfWpIKh+YYvJyzF5JRi4W+bDYeYr4jAAgr/uMaBfkte6zXMNJVB+rQ2QnFMKkhfpO/3Ji78Oi/mH34OTIvZYRqzd/OsGK0dNfDcP9ILI/y7yJyIaLawPVLLMgJhkb6r/T7/9kl95ENUxaxDmthn/OAJK/pngPskIAtgsjbW2VujzzG0lNSa2bYjYDmvJiUT9phCa9Dg2boGnxqcGQOHpOO6jHDdABDR3z0TEVHbDRIRDLlI0mx+shF63JQXUSMdEJOahGhfDaqhpfSh7Di2FK4bVb1aaVjaB1REdjfT3uHqPP0COkY+rKjIXe46D3WOgZB52w0AEHHXPQiNGF4vRm5Z6k3zjvUqe97oBjGZbUt461l1ojOQkkqxG1VkgPy2pwFOJhOQlZnxdqomvp89YIA90z53laoMUtAIBjqiW6Kv2RQtMBCkW1NONmRi12zdjZN6DcaKmQ8hQvHwZz1FMLkbqPCV0ltsdaIb4hS1LKPEgWumvI7ZTyNQMWuiCIzNGWfPMUzejCEXclpwNxJW8GxduNl7OV5YJcMpcsHDI3eidD690rPl3OHCXoQke3zELsXkUObW3BXkVPynVszAtTnAywcnxWGoSKhh8uTAFAXr1R/XjlYvKfkQzC8L9J+t3bM6YztOa5KbMgul3zCW5+7v70xKEd2qEd2qEd2qEd2qGPJvozz3onkM2MTA8AAAAASUVORK5CYII=">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0BAMAAADP4xsBAAAAGFBMVEX76u776u366u7qzMbYorPJokvAcoypRGaKLFIsAAAEoElEQVR42u2bzW4URxCAq6cXhCIhNdq1D/iQBYEEOc1qLR8SH2x+JSQkELwAgkdAyrsgorxAFDhvRJYz9nqHG4dAVpyieAePOCHBTHMY2zt/1VM10yAjui+73dP7dXVV/1TV2OJX+FLFA4d2aId2aId2aIfOlg6jbzh5Oxx8CbTeGgOMdu4o6wrRozEAwPxxZB29G6Sf8RPb6AVxN7KM3j4E6t/souPni++fAqvoebYytop+mq18tImOc6bTgUX0PF8dW0QXxIztoYsaiCNr6LhmFi3QYbFhag0d1E6jMXpWbEhsoctWI61sClqXmyJL6JCgooboGWm0o+YsRCT121JIYgetI1rb0dJ1QlTS0ZJaE1fNd+Nff5tm/GYCjj14A2eFMozeP9zxb+AsnCKi9WSSrtpubeQSTtK7XQyHioAO/zjYDuFoYoQfgAH09uTqoBY9z3rm4WjnPogqrAJ4Mc6FOtFmjRnjgs+PhkX7YdOivAjMaP24NOtH76vIPz4qeVCjghByPT/0qzJlpwr9umIyL382SK2ftzn5PkUG9P+0zSCQ9t8N6KfEyBdp/4ijaS451cX3+IEE1Vv22B452Tv0uP4n3Qge1/+kX0hfSWoNrUv09S8w0R6nMKlVW7JAzdi3eol36FKL1T4kr4NmUhtvWXm3D+Cd9019uijatFzEpfTznGlqfZQmDb/q7SPFpqGTj6IFPluxcWgdXGypcB3gEklEtPzMDLcMrpEBYitcH0W0TzCQh2lEmtDoZCVlZ0mji7OseHd4rs89I1rcJqARqZeU2edbanxElaTygCZ2fSkJ5UEDsc9QhC6jxf169L8VbWuqPkzqbDRRR2+DEoGtqZqruuLiF3dIwZ14oLhocU3R4kZZZseoZ5eSfWpIKh+YYvJyzF5JRi4W+bDYeYr4jAAgr/uMaBfkte6zXMNJVB+rQ2QnFMKkhfpO/3Ji78Oi/mH34OTIvZYRqzd/OsGK0dNfDcP9ILI/y7yJyIaLawPVLLMgJhkb6r/T7/9kl95ENUxaxDmthn/OAJK/pngPskIAtgsjbW2VujzzG0lNSa2bYjYDmvJiUT9phCa9Dg2boGnxqcGQOHpOO6jHDdABDR3z0TEVHbDRIRDLlI0mx+shF63JQXUSMdEJOahGhfDaqhpfSh7Di2FK4bVb1aaVjaB1REdjfT3uHqPP0COkY+rKjIXe46D3WOgZB52w0AEHHXPQiNGF4vRm5Z6k3zjvUqe97oBjGZbUt461l1ojOQkkqxG1VkgPy2pwFOJhOQlZnxdqomvp89YIA90z53laoMUtAIBjqiW6Kv2RQtMBCkW1NONmRi12zdjZN6DcaKmQ8hQvHwZz1FMLkbqPCV0ltsdaIb4hS1LKPEgWumvI7ZTyNQMWuiCIzNGWfPMUzejCEXclpwNxJW8GxduNl7OV5YJcMpcsHDI3eidD690rPl3OHCXoQke3zELsXkUObW3BXkVPynVszAtTnAywcnxWGoSKhh8uTAFAXr1R/XjlYvKfkQzC8L9J+t3bM6YztOa5KbMgul3zCW5+7v70xKEd2qEd2qEd2qEd2qGPJvozz3onkM2MTA8AAAAASUVORK5CYII=">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Florescer">
+<meta name="theme-color" content="#A94466">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Nunito+Sans:opsz,wght@6..12,400;6..12,500;6..12,600;6..12,700;6..12,800&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>if(window.pdfjsLib){pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';}</script>
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --paper:#FDF6F3;          /* off-white blush ground */
+  --surface:#FFFFFF;
+  --surface-2:#FBEDEC;      /* blush surface */
+  --surface-3:#F6E1E0;      /* deeper blush */
+  --line:#F0D9D7;           /* hairline, rose-biased */
+  --ink:#4A2733;            /* wine ink (primary text) */
+  --ink-2:#8A5F6A;          /* muted malva */
+  --ink-3:#B08E97;          /* faint */
+  --rose:#C9647E;           /* rosa queimado (primary accent) */
+  --rose-deep:#A94466;      /* deeper rose for pressed/gradient */
+  --rose-soft:#F4C9D3;      /* light rose */
+  --wine:#5B2A44;           /* vinho/malva contrast */
+  --gold:#C9A24B;           /* dourado, sparing */
+  --gold-soft:#EBD9A8;
+  --good:#4E9E82;           /* saudável */
+  --good-bg:#E4F1EB;
+  --warn:#C98A3C;           /* atenção */
+  --warn-bg:#F6E9D5;
+  --alert:#C25C6B;          /* revisar (kept in-palette) */
+  --alert-bg:#F7DEE0;
+  /* chart categorical (rose-family, validated for hue separation) */
+  --c1:#C9647E;  /* rosa queimado */
+  --c2:#6E5B8A;  /* malva/roxo */
+  --c3:#4E9E82;  /* verde */
+  --c4:#C9A24B;  /* dourado */
+  --c5:#8AA9C4;  /* azul suave */
+  --c6:#D68F6E;  /* terracota */
+  --shadow:0 6px 24px -8px rgba(120,40,70,.18);
+  --shadow-lg:0 18px 48px -18px rgba(120,40,70,.30);
+  --radius:22px;
+  --radius-sm:14px;
+  --maxw:480px;
+  --nav-h:78px;
+  --fdisplay:'Fraunces',Georgia,'Times New Roman',serif;
+  --fbody:'Nunito Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#241019;
+    --surface:#301622;
+    --surface-2:#3A1B29;
+    --surface-3:#45212F;
+    --line:#4A2534;
+    --ink:#F6E4EA;
+    --ink-2:#D3A9B7;
+    --ink-3:#A57C8B;
+    --rose:#E58BA3;
+    --rose-deep:#C9647E;
+    --rose-soft:#5A2A3C;
+    --wine:#F0C9D8;
+    --gold:#E0C273;
+    --gold-soft:#5A4B2A;
+    --good:#6FBF9F; --good-bg:#1E3A30;
+    --warn:#E0AE62; --warn-bg:#3E3020;
+    --alert:#E08491; --alert-bg:#3E1F27;
+    --c1:#E58BA3; --c2:#A995C9; --c3:#6FBF9F; --c4:#E0C273; --c5:#A9C4DC; --c6:#E4A788;
+    --shadow:0 6px 24px -8px rgba(0,0,0,.5);
+    --shadow-lg:0 18px 48px -18px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#241019; --surface:#301622; --surface-2:#3A1B29; --surface-3:#45212F;
+  --line:#4A2534; --ink:#F6E4EA; --ink-2:#D3A9B7; --ink-3:#A57C8B; --wine:#F0C9D8;
+  --rose:#E58BA3; --rose-deep:#C9647E; --rose-soft:#5A2A3C; --gold:#E0C273; --gold-soft:#5A4B2A;
+  --good:#6FBF9F; --good-bg:#1E3A30; --warn:#E0AE62; --warn-bg:#3E3020; --alert:#E08491; --alert-bg:#3E1F27;
+  --c1:#E58BA3; --c2:#A995C9; --c3:#6FBF9F; --c4:#E0C273; --c5:#A9C4DC; --c6:#E4A788;
+  --shadow:0 6px 24px -8px rgba(0,0,0,.5); --shadow-lg:0 18px 48px -18px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:
+    radial-gradient(120% 60% at 50% -10%, var(--surface-2) 0%, transparent 60%),
+    var(--paper);
+  color:var(--ink);
+  font-family:var(--fbody);
+  font-size:15px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:2.5px solid var(--rose);outline-offset:2px;border-radius:8px}
+input,select,textarea{font-family:inherit;font-size:16px;color:var(--ink)}
+.tnum{font-variant-numeric:tabular-nums}
+h1,h2,h3{margin:0;font-family:var(--fdisplay);font-weight:600;text-wrap:balance;color:var(--ink)}
+
+/* ============ SHELL ============ */
+#app{max-width:var(--maxw);margin:0 auto;position:relative;min-height:100vh;padding-top:env(safe-area-inset-top,0px);padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px));}
+.screen{display:none;animation:fade .35s ease both}
+.screen.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important}}
+
+.pad{padding:0 18px}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 18px 6px}
+.hello{font-family:var(--fdisplay);font-size:20px;font-weight:600}
+.hello span{color:var(--rose)}
+.subhello{color:var(--ink-2);font-size:13px;margin-top:1px}
+.icon-btn{width:40px;height:40px;border-radius:50%;background:var(--surface);box-shadow:var(--shadow);display:grid;place-items:center;font-size:17px}
+
+.card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin:14px 18px}
+.card.flat{box-shadow:none;border:1px solid var(--line)}
+.section-title{font-family:var(--fdisplay);font-size:16px;font-weight:600;margin:22px 18px 2px;display:flex;align-items:center;gap:8px}
+.section-sub{color:var(--ink-2);font-size:12.5px;margin:0 18px 8px}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);font-weight:700}
+
+/* demo banner */
+.demo-banner{margin:12px 18px 0;background:linear-gradient(100deg,var(--gold-soft),var(--surface-2));border:1px dashed var(--gold);border-radius:var(--radius-sm);padding:11px 14px;font-size:12.5px;color:var(--ink);display:flex;gap:10px;align-items:center;justify-content:space-between}
+.demo-banner b{color:var(--wine)}
+.demo-actions{display:flex;gap:6px;flex-shrink:0}
+.demo-actions button{font-size:11px;font-weight:700;padding:6px 9px;border-radius:9px;background:var(--surface);color:var(--rose);box-shadow:var(--shadow)}
+
+/* hero patrimonio */
+.hero{background:linear-gradient(150deg,var(--rose) 0%,var(--rose-deep) 60%,var(--wine) 130%);color:#fff;border-radius:26px;margin:14px 18px;padding:22px 22px 20px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-40px;top:-50px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.10)}
+.hero::before{content:"";position:absolute;right:30px;bottom:-70px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.07)}
+.hero .lbl{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.85;font-weight:700;position:relative}
+.hero .big{font-family:var(--fdisplay);font-weight:600;font-size:42px;line-height:1;margin:8px 0 2px;letter-spacing:-.5px;position:relative}
+.hero .big small{font-size:20px;opacity:.8;font-weight:500}
+.hero .row{display:flex;gap:14px;margin-top:12px;position:relative;flex-wrap:wrap}
+.chip{background:rgba(255,255,255,.18);backdrop-filter:blur(4px);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+.chip.up::before{content:"▲";font-size:9px}
+.chip.down::before{content:"▼";font-size:9px}
+
+/* meta progress */
+.meta-head{display:flex;justify-content:space-between;align-items:baseline}
+.meta-head .pct{font-family:var(--fdisplay);font-size:30px;font-weight:600;color:var(--rose)}
+.progress-track{height:16px;border-radius:999px;background:var(--surface-3);overflow:hidden;margin:12px 0 8px;position:relative}
+.progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--rose-soft),var(--rose),var(--gold));transition:width .9s cubic-bezier(.22,1,.36,1);position:relative}
+.progress-fill::after{content:"";position:absolute;right:0;top:0;bottom:0;width:22px;background:rgba(255,255,255,.4);filter:blur(3px)}
+.meta-foot{display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-2)}
+.projection{margin-top:12px;background:var(--surface-2);border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;color:var(--ink)}
+.projection b{color:var(--wine);font-family:var(--fdisplay)}
+
+.mini-controls{display:flex;gap:10px;margin-top:12px}
+.mini-field{flex:1}
+.mini-field label{font-size:11px;color:var(--ink-2);font-weight:700;display:block;margin-bottom:3px}
+.mini-field .inp{display:flex;align-items:center;background:var(--surface-2);border-radius:10px;padding:7px 10px;border:1px solid var(--line)}
+.mini-field .inp span{color:var(--ink-2);font-size:13px;margin-right:2px}
+.mini-field input{background:none;border:none;width:100%;outline:none;font-weight:700;font-size:14px}
+
+/* streak */
+.streak-card{display:flex;align-items:center;gap:14px}
+.streak-flame{font-size:34px;filter:drop-shadow(0 2px 6px rgba(201,100,126,.4))}
+.streak-num{font-family:var(--fdisplay);font-size:26px;font-weight:600;color:var(--rose)}
+.streak-dots{display:flex;gap:5px;margin-top:6px}
+.sd{width:22px;height:8px;border-radius:4px;background:var(--surface-3)}
+.sd.on{background:linear-gradient(90deg,var(--rose),var(--gold))}
+
+/* next step CTA */
+.nextstep{background:linear-gradient(120deg,var(--surface-2),var(--surface));border:1px solid var(--rose-soft);border-radius:var(--radius);margin:14px 18px;padding:16px;display:flex;align-items:center;gap:14px}
+.nextstep .emoji{font-size:26px}
+.nextstep .t{flex:1}
+.nextstep .t b{font-family:var(--fdisplay);font-size:15px}
+.nextstep .t p{margin:2px 0 0;font-size:12.5px;color:var(--ink-2)}
+.arrow-btn{background:var(--rose);color:#fff;border-radius:12px;padding:9px 12px;font-weight:800;font-size:13px;white-space:nowrap;box-shadow:var(--shadow)}
+
+/* level card */
+.level-card{display:flex;align-items:center;gap:14px}
+.level-badge{width:56px;height:56px;border-radius:18px;background:linear-gradient(140deg,var(--rose-soft),var(--gold-soft));display:grid;place-items:center;font-size:28px;flex-shrink:0}
+.level-info{flex:1}
+.level-info .nm{font-family:var(--fdisplay);font-weight:600;font-size:16px}
+.level-info .xp{font-size:12px;color:var(--ink-2)}
+.xpbar{height:8px;border-radius:4px;background:var(--surface-3);margin-top:6px;overflow:hidden}
+.xpbar>i{display:block;height:100%;background:linear-gradient(90deg,var(--rose),var(--gold));border-radius:4px}
+
+/* achievements */
+.ach-row{display:flex;gap:10px;overflow-x:auto;padding:4px 18px 6px;scrollbar-width:none}
+.ach-row::-webkit-scrollbar{display:none}
+.ach{flex:0 0 auto;width:104px;background:var(--surface);border-radius:var(--radius-sm);box-shadow:var(--shadow);padding:12px;text-align:center}
+.ach.locked{opacity:.5;filter:grayscale(.4)}
+.ach .ic{font-size:26px}
+.ach .nm{font-size:11px;font-weight:700;margin-top:6px;line-height:1.25}
+
+/* generic list rows */
+.list{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);margin:12px 18px;overflow:hidden}
+.lrow{display:flex;align-items:center;gap:12px;padding:13px 15px;border-bottom:1px solid var(--line)}
+.lrow:last-child{border-bottom:none}
+.lrow .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.lrow .main{flex:1;min-width:0}
+.lrow .main b{font-weight:700;font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lrow .main small{color:var(--ink-2);font-size:11.5px}
+.lrow .val{text-align:right;font-weight:800;font-variant-numeric:tabular-nums;font-size:14px}
+.lrow .val small{display:block;font-weight:700;font-size:11px}
+.pos{color:var(--good)} .neg{color:var(--alert)}
+
+/* pills / health chips */
+.hpill{font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;display:inline-flex;align-items:center;gap:4px}
+.hpill.g{background:var(--good-bg);color:var(--good)}
+.hpill.a{background:var(--warn-bg);color:var(--warn)}
+.hpill.r{background:var(--alert-bg);color:var(--alert)}
+
+/* alerts */
+.alertbox{display:flex;gap:11px;padding:12px 14px;border-radius:var(--radius-sm);margin:10px 18px;font-size:13px;align-items:flex-start}
+.alertbox.a{background:var(--warn-bg)} .alertbox.r{background:var(--alert-bg)} .alertbox.i{background:var(--surface-2)}
+.alertbox .ai{font-size:17px;flex-shrink:0}
+.alertbox b{font-weight:800}
+.alertbox p{margin:2px 0 0;color:var(--ink-2);font-size:12px}
+
+/* segmented tabs */
+.seg{display:flex;gap:4px;background:var(--surface-2);border-radius:14px;padding:4px;margin:14px 18px 4px}
+.seg button{flex:1;padding:9px 4px;border-radius:11px;font-weight:800;font-size:12.5px;color:var(--ink-2);transition:.2s}
+.seg button.on{background:var(--surface);color:var(--rose);box-shadow:var(--shadow)}
+
+/* donut + charts */
+.chart-wrap{margin:8px 18px}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:10px}
+.legend .li{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600}
+.legend .sw{width:12px;height:12px;border-radius:4px}
+.legend .li small{color:var(--ink-2);font-weight:700}
+
+/* saude scores */
+.score{margin:12px 0}
+.score .top{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:5px}
+.score .top span:last-child{font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.score .track{height:9px;background:var(--surface-3);border-radius:5px;overflow:hidden}
+.score .track>i{display:block;height:100%;border-radius:5px}
+
+/* journey */
+.journey{margin:14px 18px}
+.jstep{display:flex;gap:14px;align-items:flex-start;position:relative;padding-bottom:20px}
+.jstep::before{content:"";position:absolute;left:21px;top:34px;bottom:-6px;width:2px;background:var(--line)}
+.jstep:last-child::before{display:none}
+.jstep .node{width:44px;height:44px;border-radius:14px;background:var(--surface-2);display:grid;place-items:center;font-size:22px;flex-shrink:0;z-index:1;border:2px solid var(--line)}
+.jstep.done .node{background:linear-gradient(140deg,var(--rose-soft),var(--gold-soft));border-color:var(--gold)}
+.jstep.current .node{background:var(--surface);border-color:var(--rose);box-shadow:0 0 0 4px var(--rose-soft)}
+.jstep .jt{padding-top:3px}
+.jstep .jt b{font-family:var(--fdisplay);font-weight:600;font-size:15px}
+.jstep .jt small{display:block;color:var(--ink-2);font-size:12px}
+.jstep.done .jt b::after{content:" ✓";color:var(--good)}
+
+/* education cards */
+.edu{display:flex;align-items:center;gap:12px;padding:14px 15px;border-bottom:1px solid var(--line)}
+.edu:last-child{border-bottom:none}
+.edu .ei{width:38px;height:38px;border-radius:11px;background:var(--surface-2);display:grid;place-items:center;font-size:19px;flex-shrink:0}
+.edu .em{flex:1}
+.edu .em b{font-size:13.5px;font-weight:700}
+.edu .em small{display:block;color:var(--ink-2);font-size:11.5px}
+.edu .exp{font-size:11px;font-weight:800;color:var(--gold);white-space:nowrap}
+.edu.done .exp{color:var(--good)}
+
+/* buttons */
+.btn{display:block;width:100%;text-align:center;background:var(--rose);color:#fff;font-weight:800;font-size:15px;padding:15px;border-radius:16px;box-shadow:var(--shadow)}
+.btn.ghost{background:var(--surface);color:var(--rose);border:1.5px solid var(--rose-soft);box-shadow:none}
+.btn.sec{background:var(--surface-2);color:var(--wine)}
+.btn:active{transform:scale(.98)}
+
+/* AI */
+.ai-wrap{margin:12px 18px}
+.ai-status{font-size:12px;color:var(--ink-2);text-align:center;margin:6px 0}
+.suggest-chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
+.suggest-chips button{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-size:12.5px;font-weight:600;color:var(--wine);box-shadow:var(--shadow);text-align:left}
+.ai-thread{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+.bubble{max-width:88%;padding:12px 14px;border-radius:16px;font-size:13.5px;line-height:1.5}
+.bubble.me{align-self:flex-end;background:var(--rose);color:#fff;border-bottom-right-radius:5px}
+.bubble.ai{align-self:flex-start;background:var(--surface);box-shadow:var(--shadow);border-bottom-left-radius:5px;white-space:pre-wrap}
+.bubble.ai b{color:var(--wine)}
+.ai-input{display:flex;gap:8px;align-items:flex-end}
+.ai-input textarea{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:11px 14px;resize:none;max-height:120px;box-shadow:var(--shadow);line-height:1.4}
+.ai-send{width:46px;height:46px;border-radius:50%;background:var(--rose);color:#fff;font-size:18px;display:grid;place-items:center;flex-shrink:0;box-shadow:var(--shadow)}
+.ai-disclaimer{font-size:10.5px;color:var(--ink-3);text-align:center;margin-top:8px;line-height:1.4}
+
+/* bottom nav */
+.nav{position:fixed;bottom:0;left:0;right:0;height:calc(var(--nav-h) + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;z-index:40;max-width:var(--maxw);margin:0 auto}
+.nav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--ink-3);font-size:10px;font-weight:700}
+.nav button .ni{font-size:20px;transition:transform .2s}
+.nav button.on{color:var(--rose)}
+.nav button.on .ni{transform:translateY(-2px) scale(1.08)}
+.nav .center{position:relative}
+.nav .center .fab{position:absolute;top:-22px;width:54px;height:54px;border-radius:50%;background:linear-gradient(145deg,var(--rose),var(--rose-deep));color:#fff;font-size:26px;display:grid;place-items:center;box-shadow:0 10px 22px -6px rgba(169,68,102,.6);border:4px solid var(--paper)}
+.nav .center span:last-child{margin-top:32px}
+
+/* modal / sheet */
+.overlay{position:fixed;inset:0;background:rgba(60,20,40,.45);backdrop-filter:blur(2px);z-index:60;display:none;align-items:flex-end;justify-content:center}
+.overlay.open{display:flex;animation:fade .25s ease}
+.sheet{background:var(--paper);width:100%;max-width:var(--maxw);border-radius:26px 26px 0 0;padding:8px 18px calc(24px + env(safe-area-inset-bottom,0px));max-height:92vh;overflow-y:auto;animation:slideup .3s cubic-bezier(.22,1,.36,1)}
+@keyframes slideup{from{transform:translateY(100%)}to{transform:none}}
+.sheet .grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:8px auto 14px}
+.sheet h2{font-size:20px;margin-bottom:2px}
+.sheet .sub{color:var(--ink-2);font-size:13px;margin-bottom:14px}
+.field{margin-bottom:14px}
+.field label{font-size:12.5px;font-weight:800;color:var(--wine);display:block;margin-bottom:6px}
+.field .box{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:13px 14px;display:flex;align-items:center;gap:6px}
+.field .box:focus-within{border-color:var(--rose)}
+.field .box span{color:var(--ink-2);font-weight:700}
+.field input,.field select,.field textarea{border:none;background:none;outline:none;width:100%;font-weight:600}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{padding:10px 14px;border-radius:12px;background:var(--surface);border:1.5px solid var(--line);font-weight:700;font-size:13px}
+.opt.on{border-color:var(--rose);background:var(--surface-2);color:var(--rose)}
+
+/* celebration */
+.celebrate{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;pointer-events:none}
+.celebrate.on{display:flex}
+.celebrate .card2{background:var(--surface);border-radius:26px;padding:28px 30px;text-align:center;box-shadow:var(--shadow-lg);animation:pop .5s cubic-bezier(.22,1.4,.5,1) both;max-width:300px;pointer-events:auto;border:2px solid var(--gold-soft)}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+.celebrate .big2{font-family:var(--fdisplay);font-size:24px;font-weight:600;color:var(--rose);margin:8px 0 4px}
+.celebrate .xp2{display:inline-block;background:var(--gold-soft);color:var(--wine);font-weight:800;padding:6px 14px;border-radius:999px;margin-top:8px}
+#confetti{position:fixed;inset:0;z-index:79;pointer-events:none;display:none}
+#confetti.on{display:block}
+
+.footer-note{text-align:center;font-size:10.5px;color:var(--ink-3);padding:18px 26px 6px;line-height:1.5}
+.tiny-link{color:var(--rose);font-weight:800;text-decoration:underline;cursor:pointer}
+
+/* import review table */
+.imp-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
+.imp-table th{text-align:left;color:var(--ink-2);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;padding:6px 6px}
+.imp-table td{padding:5px 6px;border-top:1px solid var(--line)}
+.imp-table input,.imp-table select{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:6px}
+.imp-del{color:var(--alert);font-weight:900;font-size:15px;cursor:pointer}
+.imp-card{border:1.5px solid var(--line);border-radius:16px;padding:12px 14px 4px;margin-top:10px;background:var(--surface)}
+.imp-card .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px}
+.imp-card .hd b{font-size:12.5px;color:var(--wine)}
+.imp-grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.imp-grid2 .field{margin-bottom:10px}
+.imp-grid2 .field.full{grid-column:1/-1}
+.imp-grid2 .field label{font-size:10px;margin-bottom:4px;text-transform:uppercase;letter-spacing:.03em}
+.imp-grid2 .field .box{padding:8px 10px;border-radius:10px}
+.imp-grid2 .field input{font-size:13px}
+
+.ministat{font-size:10.5px;font-weight:700;color:var(--ink-2);background:var(--surface-2);padding:3px 8px;border-radius:999px;white-space:nowrap}
+.idea{border:1px solid var(--line);border-radius:14px;padding:12px 13px;margin-top:9px;background:var(--surface)}
+.idea .ihead{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.idea .itk{font-size:14px;font-weight:800;color:var(--ink)}
+.idea .itag{font-size:10px;font-weight:800;color:var(--rose);background:var(--surface-2);padding:3px 8px;border-radius:999px;white-space:nowrap}
+.sleeve-head{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.sleeve-head b{font-family:var(--fdisplay);font-size:15px}
+.spinner{width:18px;height:18px;border:2.5px solid var(--rose-soft);border-top-color:var(--rose);border-radius:50%;display:inline-block;animation:spin .7s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+
+</head>
+<body>
+<div id="app">
+  <!-- SCREENS render into here -->
+  <div id="screen-home" class="screen active"></div>
+  <div id="screen-carteira" class="screen"></div>
+  <div id="screen-investir" class="screen"></div>
+  <div id="screen-performance" class="screen"></div>
+  <div id="screen-ia" class="screen"></div>
+</div>
+
+<nav class="nav" id="nav">
+  <button data-nav="home" class="on"><span class="ni">🏠</span><span>Home</span></button>
+  <button data-nav="carteira"><span class="ni">💎</span><span>Carteira</span></button>
+  <button data-nav="investir" class="center"><span class="fab">＋</span><span>Investir</span></button>
+  <button data-nav="performance"><span class="ni">📊</span><span>Evolução</span></button>
+  <button data-nav="ia"><span class="ni">🌷</span><span>IA</span></button>
+</nav>
+
+<canvas id="confetti"></canvas>
+<div class="celebrate" id="celebrate"></div>
+<div class="overlay" id="overlay"><div class="sheet" id="sheet"></div></div>
+
+<script>
+"use strict";
+/* =========================================================
+   FLORESCER — app pessoal de investimentos
+   Dados no armazenamento local do dispositivo. IA via claude.use('sample').
+   ========================================================= */
+
+/* ---------- utils ---------- */
+const BRL = n => 'R$ ' + Math.round(n).toLocaleString('pt-BR');
+const BRL2 = n => 'R$ ' + n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const pct = n => (n>=0?'+':'') + n.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1}) + '%';
+const $ = s => document.querySelector(s);
+const el = (tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;};
+const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const MONTHS=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const todayISO = ()=> new Date().toISOString().slice(0,10);
+const monthKey = d => { const x=new Date(d); return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0'); };
+
+/* ---------- seed demo data ---------- */
+function seed(){
+  return {
+    version:1, demo:true,
+    profile:{ name:'Patrícia', goal:1000000, monthlyContribution:2500, expectedReturn:10.5 },
+    xp:3450, streak:4,
+    edu:{}, // id -> true
+    // fictional conservative portfolio (=170.000)
+    holdings:[
+      {id:'h1', inst:'BTG', klass:'Renda Fixa', type:'CDB', name:'CDB BTG 110% CDI', invested:30000, current:32000, rate:'110% CDI', maturity:'2027-03-15', liquidity:'No vencimento', issuer:'Banco BTG Pactual', fgc:true},
+      {id:'h2', inst:'BTG', klass:'Renda Fixa', type:'Tesouro Direto', name:'Tesouro Selic 2029', invested:24000, current:25000, rate:'SELIC + 0,10%', maturity:'2029-03-01', liquidity:'D+1', issuer:'Tesouro Nacional', fgc:false},
+      {id:'h3', inst:'XP', klass:'Renda Fixa', type:'CDB', name:'CDB XP 105% CDI', invested:27000, current:28000, rate:'105% CDI', maturity:'2026-10-20', liquidity:'No vencimento', issuer:'Banco XP', fgc:true},
+      {id:'h4', inst:'XP', klass:'Renda Fixa', type:'Tesouro Direto', name:'Tesouro IPCA+ 2035', invested:20000, current:20000, rate:'IPCA + 6,10%', maturity:'2035-05-15', liquidity:'D+1', issuer:'Tesouro Nacional', fgc:false},
+      {id:'h5', inst:'XP', klass:'Renda Fixa', type:'LCI/LCA', name:'LCI XP 95% CDI', invested:15000, current:15000, rate:'95% CDI (isento IR)', maturity:'2026-11-30', liquidity:'No vencimento', issuer:'Banco XP', fgc:true},
+      {id:'h6', inst:'PicPay', klass:'Renda Fixa', type:'CDB', name:'CDB PicPay 100% CDI', invested:12000, current:12000, rate:'100% CDI', maturity:'2028-01-10', liquidity:'Diária', issuer:'PicPay Bank', fgc:true},
+      {id:'h7', inst:'XP', klass:'Fundos', type:'Fundo', name:'XP Referenciado DI FIC', invested:10000, current:10120, rate:'CDI', category:'Renda Fixa DI', admFee:0.20, perfFee:0, r12:9.8, bench12:10.4, health:'g'},
+      {id:'h8', inst:'BTG', klass:'Fundos', type:'Fundo', name:'BTG Multimercado FIM', invested:8000, current:7850, rate:'—', category:'Multimercado', admFee:1.9, perfFee:20, r12:6.2, bench12:10.4, health:'a'},
+      {id:'h9', inst:'BTG', klass:'ETFs', type:'ETF', name:'IVVB11 (S&P 500)', invested:6800, current:8000, rate:'—', category:'Ações EUA', admFee:0.23, perfFee:0, r12:18.5, bench12:16.0, health:'g'},
+      {id:'h10', inst:'XP', klass:'ETFs', type:'ETF', name:'BOVA11 (Ibovespa)', invested:5200, current:5000, rate:'—', category:'Ações BR', admFee:0.10, perfFee:0, r12:-1.4, bench12:2.0, health:'a'},
+      {id:'h11', inst:'PicPay', klass:'Caixa', type:'Caixa', name:'Reserva de emergência', invested:7000, current:7000, rate:'102% CDI', maturity:null, liquidity:'Diária', issuer:'PicPay Bank', fgc:true},
+    ],
+    // last 13 monthly net worth snapshots (oldest->newest)
+    history:[156800,158300,159100,160600,161500,162800,163900,165000,165900,166800,167300,167660,170000],
+    // contributions log (recent). value in R$
+    contributions:[
+      {month:'-5', label:'abr', value:2500},
+      {month:'-4', label:'mai', value:0},
+      {month:'-3', label:'jun', value:2000},
+      {month:'-2', label:'jul', value:2500},
+      {month:'-1', label:'ago', value:3000},
+      {month:'0',  label:'set', value:2340},
+    ],
+    transactions:[], // real aportes logged by user
+  };
+}
+
+/* ---------- minha carteira real (dados da Patrícia) ----------
+   Estes são os seus investimentos reais, embutidos no app. Eles entram uma única vez
+   (controlado por DATA_VERSION) e, a partir daí, você edita tudo pela própria tela —
+   o que você mudar no app nunca é sobrescrito por isto. */
+const MY_DATA=[]; // vazio de propósito: site público não carrega dados pessoais
+const DATA_VERSION='2026-09-09';
+function applyMyData(){
+  if(!MY_DATA.length){ if(S.dataVersion!==DATA_VERSION){ S.dataVersion=DATA_VERSION; save(); } return false; }
+  if(S.dataVersion===DATA_VERSION) return false;
+  try{ localStorage.setItem(KEY+'.backup', JSON.stringify(S)); }catch(e){}
+  S.demo=false;
+  S.holdings=JSON.parse(JSON.stringify(MY_DATA));
+  S.dataVersion=DATA_VERSION;
+  if(S.profile.monthlyContribution===2500) S.profile.monthlyContribution=3000; // seu aporte mensal
+  if(!S.profile.targetAllocation) S.profile.targetAllocation=Object.assign({},DEFAULT_TARGET);
+  const t=S.holdings.reduce((a,h)=>a+(+h.current||0),0);
+  if(!S.history||!S.history.length) S.history=[t]; else S.history[S.history.length-1]=t;
+  S.justImported=true;
+  save();
+  return true;
+}
+function undoMyData(){
+  try{
+    const raw=localStorage.getItem(KEY+'.backup');
+    if(raw){ const prev=JSON.parse(raw); prev.dataVersion=DATA_VERSION; prev.justImported=false; S=prev; save(); renderAll(); toast('Carteira anterior restaurada 🌸'); return; }
+  }catch(e){}
+  toast('Não encontrei uma versão anterior pra restaurar.');
+}
+function dismissImportBanner(){ S.justImported=false; save(); renderHome(); }
+function ensureIds(){ S.holdings.forEach((h,i)=>{ if(!h.id) h.id='h'+i+'x'+Date.now(); }); }
+
+/* ---------- store (localStorage, privado neste aparelho) ---------- */
+const KEY='florescer.state.v1';
+let S;
+function load(){
+  try{ const raw=localStorage.getItem(KEY); if(raw){S=JSON.parse(raw); return;} }catch(e){}
+  S=seed();
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function resetDemo(){ S=seed(); save(); renderAll(); }
+function startFresh(){
+  S=seed(); S.demo=false; S.holdings=[]; S.history=[]; S.contributions=[]; S.xp=0; S.streak=0; S.edu={};
+  S.profile.monthlyContribution=2500;
+  save(); renderAll();
+}
+function wipeAll(){ try{localStorage.removeItem(KEY);}catch(e){} S=seed(); save(); renderAll(); }
+/* ---------- derived metrics ---------- */
+const CLASSES=['Renda Fixa','Fundos','ETFs','Caixa'];
+const classColor={'Renda Fixa':'var(--c1)','Fundos':'var(--c2)','ETFs':'var(--c3)','Caixa':'var(--c4)','Ações':'var(--c5)','Outros':'var(--c6)'};
+const instColor={'BTG':'var(--c1)','XP':'var(--c2)','PicPay':'var(--c3)'};
+
+function total(){ return S.holdings.reduce((a,h)=>a+ (+h.current||0),0); }
+function invested(){ return S.holdings.reduce((a,h)=>a+ (+h.invested||0),0); }
+function byClass(){
+  const m={}; S.holdings.forEach(h=>{ const k=CLASSES.includes(h.klass)?h.klass:'Outros'; m[k]=(m[k]||0)+(+h.current||0); }); return m;
+}
+function byInst(){
+  const m={}; S.holdings.forEach(h=>{ m[h.inst]=(m[h.inst]||0)+(+h.current||0); }); return m;
+}
+function monthChange(){
+  const h=S.history; if(h.length<2) return 0; return h[h.length-1]-h[h.length-2];
+}
+function change12(){
+  const h=S.history; if(h.length<2) return 0; const first=h[Math.max(0,h.length-13)]; const last=h[h.length-1];
+  return first? (last/first-1)*100 : 0;
+}
+// projection: months to reach goal given current total, monthly contribution, annual return
+function monthsToGoal(cur,pmt,annual){
+  const r=annual/100/12; let v=cur; let m=0;
+  if(v>=S.profile.goal) return 0;
+  while(v<S.profile.goal && m<1200){ v=v*(1+r)+pmt; m++; }
+  return m>=1200? null : m;
+}
+function fmtYears(months){
+  if(months==null) return 'muito tempo (ajuste seus aportes)';
+  if(months===0) return 'meta atingida! 🎉';
+  const y=Math.floor(months/12), mo=months%12;
+  let s=''; if(y) s+=y+(y===1?' ano':' anos'); if(mo){ if(s)s+=' e '; s+=mo+(mo===1?' mês':' meses'); }
+  return s||'menos de 1 mês';
+}
+
+/* ---------- gamification: levels ---------- */
+const LEVELS=[
+  {min:0,     name:'Começando',              icon:'🌱'},
+  {min:1000,  name:'Investidora',            icon:'🌷'},
+  {min:3000,  name:'Investidora Consistente',icon:'🌸'},
+  {min:7000,  name:'Investidora Avançada',   icon:'💎'},
+  {min:15000, name:'Wealth Builder',         icon:'👑'},
+];
+function level(){ let l=LEVELS[0]; for(const x of LEVELS) if(S.xp>=x.min) l=x; return l; }
+function nextLevel(){ return LEVELS.find(x=>x.min>S.xp)||null; }
+function levelProgress(){
+  const cur=level(), nx=nextLevel(); if(!nx) return 1;
+  return (S.xp-cur.min)/(nx.min-cur.min);
+}
+function addXP(n){ S.xp+=n; }
+
+/* ---------- SVG chart builders ---------- */
+function lineChart(data,{w=440,h=150,pad=14,color='var(--rose)',fill=true,labels=null}={}){
+  if(!data||data.length<2) return '<div style="color:var(--ink-3);font-size:12px;padding:20px;text-align:center">Sem dados suficientes ainda. Registre aportes para ver sua evolução. 🌱</div>';
+  const min=Math.min(...data), max=Math.max(...data), span=(max-min)||1;
+  const iw=w-pad*2, ih=h-pad*2-16;
+  const X=i=>pad+iw*i/(data.length-1);
+  const Y=v=>pad+ih-(v-min)/span*ih;
+  let d='',a='';
+  data.forEach((v,i)=>{ const x=X(i).toFixed(1),y=Y(v).toFixed(1); d+=(i?'L':'M')+x+' '+y+' '; });
+  a='M'+pad+' '+(pad+ih)+' '+data.map((v,i)=>'L'+X(i).toFixed(1)+' '+Y(v).toFixed(1)).join(' ')+' L'+X(data.length-1)+' '+(pad+ih)+' Z';
+  const lastX=X(data.length-1), lastY=Y(data[data.length-1]);
+  // gridlines
+  let grid='';
+  for(let g=0;g<=2;g++){ const yy=(pad+ih*g/2).toFixed(1); grid+=`<line x1="${pad}" y1="${yy}" x2="${w-pad}" y2="${yy}" stroke="var(--line)" stroke-width="1"/>`; }
+  let labs='';
+  if(labels){ labels.forEach((lb,i)=>{ if(lb) labs+=`<text x="${X(i).toFixed(1)}" y="${h-2}" font-size="9" fill="var(--ink-3)" text-anchor="middle" font-family="var(--fbody)">${lb}</text>`; }); }
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" role="img" aria-label="Evolução do patrimônio">
+    <defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${color}" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="${color}" stop-opacity="0.01"/></linearGradient></defs>
+    ${grid}
+    ${fill?`<path d="${a}" fill="url(#lg)"/>`:''}
+    <path d="${d}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="${lastX.toFixed(1)}" cy="${lastY.toFixed(1)}" r="4.5" fill="${color}" stroke="var(--surface)" stroke-width="2"/>
+    ${labs}
+  </svg>`;
+}
+function barChart(items,{w=440,h=150,pad=16,color='var(--rose)'}={}){
+  if(!items.length) return '';
+  const max=Math.max(...items.map(i=>i.v),1);
+  const iw=w-pad*2, ih=h-pad*2-14;
+  const bw=iw/items.length*0.56, gap=iw/items.length;
+  let bars='';
+  items.forEach((it,i)=>{
+    const bh=Math.max(2,it.v/max*ih);
+    const x=pad+gap*i+(gap-bw)/2, y=pad+ih-bh;
+    const col= it.v===0? 'var(--surface-3)':color;
+    bars+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" rx="4" fill="${col}"/>`;
+    bars+=`<text x="${(x+bw/2).toFixed(1)}" y="${h-2}" font-size="9" fill="var(--ink-3)" text-anchor="middle">${esc(it.label)}</text>`;
+    if(it.v>0) bars+=`<text x="${(x+bw/2).toFixed(1)}" y="${(y-4).toFixed(1)}" font-size="8.5" fill="var(--ink-2)" text-anchor="middle" font-weight="700">${Math.round(it.v/1000)}k</text>`;
+  });
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" role="img" aria-label="Aportes por mês">${bars}</svg>`;
+}
+function donut(map,colorFn,{size=170,thick=26}={}){
+  const entries=Object.entries(map).filter(([k,v])=>v>0);
+  const tot=entries.reduce((a,[,v])=>a+v,0)||1;
+  const r=(size-thick)/2, cx=size/2, cy=size/2, C=2*Math.PI*r;
+  let off=0, segs='';
+  entries.forEach(([k,v])=>{
+    const frac=v/tot, len=frac*C;
+    segs+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${colorFn(k)}" stroke-width="${thick}"
+      stroke-dasharray="${(len-2).toFixed(2)} ${(C-len+2).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}"
+      transform="rotate(-90 ${cx} ${cy})" stroke-linecap="round"/>`;
+    off+=len;
+  });
+  return {svg:`<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" role="img" aria-label="Distribuição da carteira">
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--surface-3)" stroke-width="${thick}"/>
+    ${segs}</svg>`, entries, tot};
+}
+
+/* ---------- health scores (demo/derived) ---------- */
+function healthScores(){
+  const tot=total()||1; const bc=byClass(); const bi=byInst();
+  const rf=(bc['Renda Fixa']||0)+(bc['Caixa']||0);
+  const liquid=(bc['Caixa']||0)+ S.holdings.filter(h=>/Di|D\+1|D1/i.test(h.liquidity||'')|| (h.liquidity||'').includes('Diária')).reduce((a,h)=>a+h.current,0);
+  const maxInst=Math.max(0,...Object.values(bi));
+  const classesUsed=Object.values(bc).filter(v=>v>0).length;
+  const diversification=Math.round(Math.min(100, classesUsed*22 + (1-maxInst/tot)*30));
+  const liquidity=Math.round(Math.min(100, (liquid/tot)*70 + 30));
+  const concentration=Math.round(Math.max(0,100-(maxInst/tot)*100*1.15));
+  const risk=Math.round(Math.min(100,(1-rf/tot)*100 + 6)); // low = conservative
+  const suit=Math.round(Math.min(100, 60 + (rf/tot)*38)); // conservative profile -> high RF suits
+  return {diversification,liquidity,concentration,risk,suit,maxInst,maxInstName:Object.keys(bi).find(k=>bi[k]===maxInst)};
+}
+function scoreColor(v,invert){ // invert: lower is better (risk)
+  const good = invert? v<35 : v>=75;
+  const warn = invert? v<60 : v>=55;
+  return good?'var(--good)':warn?'var(--warn)':'var(--alert)';
+}
+
+/* ---------- confetti ---------- */
+function confetti(){
+  const c=$('#confetti'), ctx=c.getContext('2d');
+  c.width=innerWidth; c.height=innerHeight; c.classList.add('on');
+  const cols=['#C9647E','#E58BA3','#C9A24B','#F4C9D3','#6E5B8A','#EBD9A8'];
+  const parts=Array.from({length:120},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*0.4,r:4+Math.random()*6,vy:2+Math.random()*4,vx:-2+Math.random()*4,rot:Math.random()*6,vr:-.2+Math.random()*.4,col:cols[Math.floor(Math.random()*cols.length)]}));
+  let t=0; const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if(reduce){ setTimeout(()=>c.classList.remove('on'),300); return; }
+  (function anim(){
+    t++; ctx.clearRect(0,0,c.width,c.height);
+    parts.forEach(p=>{ p.y+=p.vy; p.x+=p.vx; p.rot+=p.vr;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot); ctx.fillStyle=p.col;
+      ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*0.6); ctx.restore(); });
+    if(t<150) requestAnimationFrame(anim); else c.classList.remove('on');
+  })();
+}
+function celebrate(title,sub,xp){
+  const box=$('#celebrate');
+  box.innerHTML=`<div class="card2">
+    <div style="font-size:44px">🌸</div>
+    <div class="big2">${esc(title)}</div>
+    <div style="color:var(--ink-2);font-size:13px">${sub||''}</div>
+    ${xp?`<div class="xp2">+${xp} XP 💗</div>`:''}
+    <button class="btn" style="margin-top:16px" onclick="closeCelebrate()">Continuar</button>
+  </div>`;
+  box.classList.add('on'); confetti();
+}
+window.closeCelebrate=()=>{ $('#celebrate').classList.remove('on'); };
+
+/* ===========================================================
+   RENDERERS
+   =========================================================== */
+function renderAll(){ renderHome(); renderCarteira(); renderInvestir(); renderPerformance(); renderIA(); }
+
+function demoBanner(){
+  if(!S.demo) return '';
+  return `<div class="demo-banner">
+    <div><b>Dados de demonstração.</b> Uma carteira exemplo pra você ver o app funcionando. Ela some quando você importar seus extratos ou começar do zero.</div>
+    <div class="demo-actions">
+      <button onclick="go('investir')">Importar</button>
+      <button onclick="confirmFresh()">Começar do zero</button>
+    </div>
+  </div>`;
+}
+
+function importBanner(){
+  if(!S.justImported) return '';
+  const n=S.holdings.length;
+  return `<div class="demo-banner">
+    <div><b>Sua carteira foi carregada.</b> ${n} investimentos da sua planilha (PicPay, BTG e Nubank) já estão aqui. Daqui pra frente é só editar pelo app — toque em qualquer investimento na Carteira pra alterar ou excluir.</div>
+    <div class="demo-actions">
+      <button onclick="dismissImportBanner()">Entendi</button>
+      <button onclick="undoMyData()">Desfazer</button>
+    </div>
+  </div>`;
+}
+
+/* ---------- HOME ---------- */
+function renderHome(){
+  const tot=total(), mc=monthChange(), c12=change12();
+  const goal=S.profile.goal, prog=Math.min(1,tot/goal), pctv=(prog*100);
+  const lv=level(), nx=nextLevel();
+  const hour=new Date().getHours();
+  const greet = hour<6?'Boa madrugada':hour<12?'Bom dia':hour<18?'Boa tarde':'Boa noite';
+  const months=monthsToGoal(tot,S.profile.monthlyContribution,S.profile.expectedReturn);
+  const streakDots=Array.from({length:6},(_,i)=>`<div class="sd ${i<Math.min(6,S.streak)?'on':''}"></div>`).join('');
+
+  const html=`
+  <div class="topbar">
+    <div>
+      <div class="hello">${greet}, <span>${esc(S.profile.name)}</span> 💗</div>
+      <div class="subhello">Que bom te ver. Vamos florescer?</div>
+    </div>
+    <button class="icon-btn" onclick="openSettings()" aria-label="Ajustes">⚙️</button>
+  </div>
+  ${demoBanner()}
+  ${importBanner()}
+
+  <div class="hero">
+    <div class="lbl">🌸 Seu patrimônio</div>
+    <div class="big tnum">${BRL(tot)}</div>
+    <div class="row">
+      <span class="chip ${mc>=0?'up':'down'}">${BRL(Math.abs(mc))} este mês</span>
+      <span class="chip ${c12>=0?'up':'down'}">${pct(c12)} em 12 meses</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="meta-head">
+      <div><div class="eyebrow">🎯 Rumo ao milhão</div>
+      <div style="font-size:13px;color:var(--ink-2);margin-top:3px">${BRL(tot)} de ${BRL(goal)}</div></div>
+      <div class="pct tnum">${pctv.toFixed(0)}%</div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" style="width:${Math.max(2,pctv)}%"></div></div>
+    <div class="meta-foot"><span>Faltam <b style="color:var(--ink)">${BRL(goal-tot)}</b></span><span>${pctv.toFixed(1)}% concluído</span></div>
+    <div class="projection">
+      Mantendo <b>${BRL(S.profile.monthlyContribution)}/mês</b> a <b>${S.profile.expectedReturn}% a.a.</b>, você chega ao milhão em <b>${fmtYears(months)}</b>.
+    </div>
+    <div class="mini-controls">
+      <div class="mini-field"><label>Aporte mensal</label>
+        <div class="inp"><span>R$</span><input type="number" inputmode="numeric" value="${S.profile.monthlyContribution}" onchange="setContribution(this.value)"></div></div>
+      <div class="mini-field"><label>Rendim. estimado (% a.a.)</label>
+        <div class="inp"><input type="number" step="0.1" inputmode="decimal" value="${S.profile.expectedReturn}" onchange="setReturn(this.value)"><span>%</span></div></div>
+    </div>
+    <div style="font-size:10.5px;color:var(--ink-3);margin-top:7px">Estimativa educativa, não é promessa de retorno. Ajuste o rendimento conforme seu cenário (CDI/Selic atuais).</div>
+  </div>
+
+  <div class="card streak-card">
+    <div class="streak-flame">🔥</div>
+    <div style="flex:1">
+      <div class="eyebrow">Seu streak</div>
+      <div class="streak-num tnum">${S.streak} ${S.streak===1?'mês':'meses'} investindo</div>
+      <div class="streak-dots">${streakDots}</div>
+    </div>
+  </div>
+  <div style="font-size:12px;color:var(--ink-2);margin:-6px 26px 0">${S.streak>0?'Você está construindo um hábito financeiro. 🌱':'Tudo bem começar agora. O importante é dar o primeiro passo. 💗'}</div>
+
+  <div class="nextstep">
+    <div class="emoji">💗</div>
+    <div class="t"><b>Seu próximo passo</b><p>Você separou ${BRL(S.profile.monthlyContribution)} pra investir este mês. Quer ver onde faz mais sentido?</p></div>
+    <button class="arrow-btn" onclick="go('ia');setTimeout(()=>switchIA('recomendacao'),50)">Ver ideia →</button>
+  </div>
+
+  <div class="card level-card">
+    <div class="level-badge">${lv.icon}</div>
+    <div class="level-info">
+      <div class="nm">${esc(lv.name)}</div>
+      <div class="xp tnum">${S.xp.toLocaleString('pt-BR')} XP${nx?` · faltam ${(nx.min-S.xp).toLocaleString('pt-BR')} p/ ${nx.icon} ${esc(nx.name)}`:' · nível máximo 👑'}</div>
+      <div class="xpbar"><i style="width:${(levelProgress()*100).toFixed(0)}%"></i></div>
+    </div>
+  </div>
+
+  <div class="section-title">📈 Seu dinheiro</div>
+  <div class="section-sub">Evolução do patrimônio nos últimos meses.</div>
+  <div class="card" style="padding:14px 8px 6px">${lineChart(S.history,{labels:histLabels()})}</div>
+
+  <div class="section-title">✨ Conquistas</div>
+  <div class="ach-row">${achievements()}</div>
+
+  <div class="footer-note">
+    🔒 Seus dados ficam só neste dispositivo (armazenamento local do navegador). Nada é enviado a bancos.
+    <span class="tiny-link" onclick="openSettings()">Gerenciar dados</span>
+  </div>
+  `;
+  $('#screen-home').innerHTML=html;
+}
+function histLabels(){
+  const n=S.history.length; if(!n) return [];
+  const now=new Date(); const labs=[];
+  for(let i=n-1;i>=0;i--){ const d=new Date(now.getFullYear(),now.getMonth()-i,1); labs.push(MONTHS[d.getMonth()]); }
+  // show every other to avoid crowding
+  return labs.map((l,i)=> (i===0||i===labs.length-1|| i%3===0)? l : '');
+}
+function achievements(){
+  const tot=total();
+  const list=[
+    {ic:'🌱',nm:'Primeiro aporte',on:S.demo||S.transactions.length>0||tot>0},
+    {ic:'🏆',nm:'Primeiros R$100 mil',on:tot>=100000},
+    {ic:'🔥',nm:`${Math.max(1,S.streak)} meses seguidos`,on:S.streak>=3},
+    {ic:'💎',nm:'Primeiro ETF',on:S.holdings.some(h=>h.klass==='ETFs')},
+    {ic:'📚',nm:'Primeira aula',on:Object.keys(S.edu).length>0},
+    {ic:'👑',nm:'Meio milhão',on:tot>=500000},
+  ];
+  return list.map(a=>`<div class="ach ${a.on?'':'locked'}"><div class="ic">${a.on?a.ic:'🔒'}</div><div class="nm">${esc(a.nm)}</div></div>`).join('');
+}
+
+/* ---------- CARTEIRA ---------- */
+let carteiraTab='visao';
+function renderCarteira(){
+  const tot=total();
+  const html=`
+  <div class="topbar"><div class="hello">💎 Minha carteira</div>
+  <button class="icon-btn" onclick="go('investir')" aria-label="Adicionar">＋</button></div>
+  ${demoBanner()}
+  <div class="seg">
+    <button class="${carteiraTab==='visao'?'on':''}" onclick="switchCarteira('visao')">Visão geral</button>
+    <button class="${carteiraTab==='rf'?'on':''}" onclick="switchCarteira('rf')">Renda fixa</button>
+    <button class="${carteiraTab==='fundos'?'on':''}" onclick="switchCarteira('fundos')">Fundos & ETFs</button>
+    <button class="${carteiraTab==='saude'?'on':''}" onclick="switchCarteira('saude')">Saúde</button>
+  </div>
+  <div id="carteira-body"></div>`;
+  $('#screen-carteira').innerHTML=html;
+  renderCarteiraBody();
+}
+function switchCarteira(t){ carteiraTab=t; renderCarteira(); }
+function renderCarteiraBody(){
+  const body=$('#carteira-body'); if(!body) return;
+  if(!S.holdings.length){ body.innerHTML=`<div class="card" style="text-align:center;padding:30px 20px">
+    <div style="font-size:40px">🌱</div>
+    <h3 style="margin:10px 0 4px">Sua carteira está pronta pra florescer</h3>
+    <p style="color:var(--ink-2);font-size:13px;margin:0 0 16px">Importe seus extratos ou registre seu primeiro investimento.</p>
+    <button class="btn" onclick="go('investir')">Adicionar investimento</button></div>`; return; }
+  if(carteiraTab==='visao') body.innerHTML=carteiraVisao();
+  else if(carteiraTab==='rf') body.innerHTML=carteiraRF();
+  else if(carteiraTab==='fundos') body.innerHTML=carteiraFundos();
+  else body.innerHTML=carteiraSaude();
+}
+function carteiraVisao(){
+  const tot=total(), inv=invested(), gl=tot-inv;
+  const bc=byClass(), bi=byInst();
+  const d=donut(bc,k=>classColor[k]||'var(--c6)');
+  const dLegend=d.entries.map(([k,v])=>`<div class="li"><span class="sw" style="background:${classColor[k]||'var(--c6)'}"></span>${esc(k)} <small>${(v/d.tot*100).toFixed(0)}%</small></div>`).join('');
+  // institution bars
+  const instEntries=Object.entries(bi).sort((a,b)=>b[1]-a[1]);
+  const maxI=Math.max(...instEntries.map(e=>e[1]),1);
+  const instBars=instEntries.map(([k,v])=>`
+    <div style="margin:10px 0">
+      <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700"><span>${esc(k)}</span><span class="tnum" style="color:var(--ink-2)">${(v/tot*100).toFixed(0)}% · ${BRL(v)}</span></div>
+      <div class="progress-track" style="height:10px;margin:5px 0 0"><div style="height:100%;border-radius:999px;width:${(v/maxI*100).toFixed(0)}%;background:${instColor[k]||'var(--c6)'}"></div></div>
+    </div>`).join('');
+  const concAlert = Math.max(...Object.values(bi))/tot > 0.4 ? `<div class="alertbox a"><div class="ai">⚠️</div><div><b>Concentração por instituição</b><p>Boa parte do seu patrimônio está em uma só instituição. Diversificar entre corretoras reduz risco operacional (e você amplia a cobertura do FGC, que é por CPF e por instituição).</p></div></div>`:'';
+  return `
+  <div class="card">
+    <div class="eyebrow">Patrimônio total</div>
+    <div style="font-family:var(--fdisplay);font-size:34px;font-weight:600" class="tnum">${BRL(tot)}</div>
+    <div style="display:flex;gap:16px;margin-top:6px;font-size:12.5px;color:var(--ink-2)">
+      <span>Investido: <b style="color:var(--ink)">${BRL(inv)}</b></span>
+      <span>Resultado: <b class="${gl>=0?'pos':'neg'}">${(gl>=0?'+':'')}${BRL(gl)} (${pct(inv?gl/inv*100:0)})</b></span>
+    </div>
+  </div>
+  <div class="section-title">🍰 Distribuição por classe</div>
+  <div class="card" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center">
+    ${d.svg}
+    <div class="legend" style="flex-direction:column;gap:8px">${dLegend}</div>
+  </div>
+  <div class="section-title">🏦 Concentração por instituição</div>
+  <div class="card">${instBars}</div>
+  ${concAlert}
+  <div class="section-title">📋 Todos os investimentos</div>
+  <div class="list">${S.holdings.map(holdingRow).join('')}</div>
+  <div class="footer-note">Toque em qualquer investimento pra editar ou excluir. Use ＋ pra registrar um novo aporte.</div>`;
+}
+function holdingRow(h){
+  const gl=(h.current-h.invested), glp=h.invested? gl/h.invested*100:0;
+  return `<div class="lrow" style="cursor:pointer" onclick="openEditHolding('${esc(h.id)}')">
+    <span class="dot" style="background:${classColor[h.klass]||'var(--c6)'}"></span>
+    <div class="main"><b>${esc(h.name)}</b><small>${esc(h.inst)} · ${esc(h.type)}</small></div>
+    <div class="val tnum">${BRL(h.current)}<small class="${h.noInvested?'':(gl>=0?'pos':'neg')}">${h.noInvested?'editar ›':pct(glp)}</small></div>
+  </div>`;
+}
+function daysTo(dstr){ if(!dstr) return null; const d=new Date(dstr+'T00:00'); return Math.round((d-new Date())/86400000); }
+function carteiraRF(){
+  const rf=S.holdings.filter(h=>h.klass==='Renda Fixa'||h.klass==='Caixa');
+  const tot=rf.reduce((a,h)=>a+h.current,0);
+  const alerts=[];
+  rf.forEach(h=>{ const dd=daysTo(h.maturity); if(dd!=null&&dd>=0&&dd<=60) alerts.push({h,dd}); });
+  const alertHtml=alerts.map(({h,dd})=>`<div class="alertbox a"><div class="ai">⏳</div><div><b>${esc(h.name)} vence em ${dd} dias</b><p>Em ${new Date(h.maturity+'T00:00').toLocaleDateString('pt-BR')}. Planeje o reinvestimento com antecedência pra não deixar o dinheiro parado. Motivo do alerta: vencimento próximo.</p></div></div>`).join('');
+  return `
+  <div class="card"><div class="eyebrow">Total em renda fixa + caixa</div>
+    <div style="font-family:var(--fdisplay);font-size:30px;font-weight:600" class="tnum">${BRL(tot)}</div>
+    <div style="font-size:12.5px;color:var(--ink-2);margin-top:4px">${(tot/total()*100).toFixed(0)}% da carteira · o alicerce da investidora conservadora 🌷</div></div>
+  ${alertHtml}
+  ${rf.map(rfCard).join('')}`;
+}
+function rfCard(h){
+  const dd=daysTo(h.maturity);
+  const row=(l,v)=> v?`<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:12.5px"><span style="color:var(--ink-2)">${l}</span><span style="font-weight:700">${v}</span></div>`:'';
+  const gl=h.current-h.invested;
+  return `<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+      <div><b style="font-family:var(--fdisplay);font-size:15px">${esc(h.name)}</b>
+        <div style="font-size:11.5px;color:var(--ink-2);margin-top:2px">${esc(h.inst)} · ${esc(h.type)}</div></div>
+      <div style="text-align:right"><div class="tnum" style="font-weight:800;font-size:16px">${BRL(h.current)}</div>
+        ${h.noInvested?'':`<div class="tnum ${gl>=0?'pos':'neg'}" style="font-size:11.5px;font-weight:700">${gl>=0?'+':''}${BRL(gl)}</div>`}</div>
+    </div>
+    <div style="border-top:1px solid var(--line);margin-top:10px;padding-top:6px">
+      ${h.noInvested? row('Valor aplicado','—') : row('Valor investido',BRL(h.invested))}
+      ${h.rend12!=null? row('Rendimento em 12 meses',BRL(h.rend12)) : ''}
+      ${row('Rentabilidade contratada',esc(h.rate))}
+      ${row('Modalidade',esc(h.modalidade||''))}
+      ${row('Indexador',esc(h.indexador||''))}
+      ${row('Vencimento', h.maturity? new Date(h.maturity+'T00:00').toLocaleDateString('pt-BR')+(dd!=null&&dd>=0?` (${dd} dias)`:''):'Sem vencimento')}
+      ${row('Liquidez',esc(h.liquidity))}
+      ${row('Emissor',esc(h.issuer))}
+      ${row('Cobertura FGC', h.fgc? '✅ Sim (até R$ 250 mil por CPF/instituição)':'❌ Não (Tesouro tem garantia do Governo)')}
+    </div>
+    ${h.noInvested?`<div style="font-size:11px;color:var(--ink-3);margin-top:8px">O extrato não trouxe o valor originalmente aplicado, então a rentabilidade desta posição ainda não é calculada. Você pode preencher tocando em Editar.</div>`:''}
+    <button class="btn ghost" style="margin-top:10px;padding:9px;font-size:13px" onclick="openEditHolding('${esc(h.id)}')">✏️ Editar</button>
+  </div>`;
+}
+function carteiraFundos(){
+  const fd=S.holdings.filter(h=>h.klass==='Fundos'||h.klass==='ETFs');
+  if(!fd.length) return `<div class="card" style="text-align:center;color:var(--ink-2);padding:26px">Você ainda não tem fundos ou ETFs. Diversificar aos poucos pode fortalecer sua carteira. 🌸</div>`;
+  return fd.map(fundCard).join('') + `<div class="footer-note">A avaliação 🟢🟡🔴 é um ponto de partida pra investigar — nunca uma ordem de compra ou venda.</div>`;
+}
+function fundCard(h){
+  const gl=h.current-h.invested, glp=h.invested?gl/h.invested*100:0;
+  const hp = h.health==='g'?'<span class="hpill g">🟢 Saudável</span>': h.health==='a'?'<span class="hpill a">🟡 Atenção</span>':'<span class="hpill r">🔴 Revisar</span>';
+  const vsB = h.r12!=null&&h.bench12!=null ? (h.r12-h.bench12) : null;
+  const benchNote = vsB!=null ? (vsB>=0
+      ? `Rendeu ${pct(h.r12)} em 12 meses, acima do benchmark (${pct(h.bench12)}). Bom sinal — acompanhe a consistência.`
+      : `Rendeu ${pct(h.r12)} em 12 meses, abaixo do benchmark (${pct(h.bench12)}). Isso merece investigação, mas não significa automaticamente que você deva vender.`) : '';
+  const row=(l,v)=> v!=null&&v!==''?`<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:12.5px"><span style="color:var(--ink-2)">${l}</span><span style="font-weight:700">${v}</span></div>`:'';
+  return `<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+      <div><b style="font-family:var(--fdisplay);font-size:15px">${esc(h.name)}</b>
+        <div style="font-size:11.5px;color:var(--ink-2);margin-top:2px">${esc(h.inst)} · ${esc(h.category||h.type)}</div>
+        <div style="margin-top:6px">${hp}</div></div>
+      <div style="text-align:right"><div class="tnum" style="font-weight:800;font-size:16px">${BRL(h.current)}</div>
+        <div class="tnum ${gl>=0?'pos':'neg'}" style="font-size:11.5px;font-weight:700">${pct(glp)}</div></div>
+    </div>
+    <div style="border-top:1px solid var(--line);margin-top:10px;padding-top:6px">
+      ${row('Valor investido',BRL(h.invested))}
+      ${row('Rentab. 12 meses', h.r12!=null?pct(h.r12):null)}
+      ${row('Benchmark 12 meses', h.bench12!=null?pct(h.bench12):null)}
+      ${row('Taxa de administração', h.admFee!=null?h.admFee+'% a.a.':null)}
+      ${row('Taxa de performance', h.perfFee?h.perfFee+'%':'Sem')}
+    </div>
+    ${benchNote?`<div class="alertbox ${vsB>=0?'i':'a'}" style="margin:10px 0 0"><div class="ai">${vsB>=0?'💡':'🔎'}</div><div><p style="color:var(--ink);margin:0">${benchNote}</p></div></div>`:''}
+    <button class="btn ghost" style="margin-top:10px;padding:9px;font-size:13px" onclick="openEditHolding('${esc(h.id)}')">✏️ Editar</button>
+  </div>`;
+}
+function carteiraSaude(){
+  const s=healthScores();
+  const scores=[
+    {l:'Diversificação',v:s.diversification,inv:false,note:'Quantas classes e instituições diferentes você usa.'},
+    {l:'Liquidez',v:s.liquidity,inv:false,note:'Quanto do seu dinheiro você consegue resgatar rápido.'},
+    {l:'Concentração',v:s.concentration,inv:false,note:'Quanto está distribuído entre instituições (maior = mais distribuído).'},
+    {l:'Risco',v:s.risk,inv:true,note:'Exposição a renda variável. Menor = mais conservador.'},
+    {l:'Adequação ao perfil',v:s.suit,inv:false,note:'O quanto a carteira combina com seu perfil conservador.'},
+  ];
+  const overall = (s.diversification+s.liquidity+s.concentration+(100-s.risk)+s.suit)/5;
+  const verdict = overall>=75?['🌸 Sua carteira está saudável','var(--good)']: overall>=60?['🌼 Sua carteira está bem, com pontos de atenção','var(--warn)']:['🌷 Sua carteira precisa de alguns ajustes','var(--alert)'];
+  return `
+  <div class="card" style="text-align:center;background:linear-gradient(150deg,var(--surface),var(--surface-2))">
+    <div style="font-size:40px">🩷</div>
+    <h2 style="color:${verdict[1]};margin:6px 0 2px">${verdict[0]}</h2>
+    <p style="color:var(--ink-2);font-size:13px;margin:0">Nota geral ${Math.round(overall)}/100</p>
+  </div>
+  <div class="card">
+    ${scores.map(sc=>`<div class="score">
+      <div class="top"><span>${sc.l}</span><span class="tnum">${sc.v}/100</span></div>
+      <div class="track"><i style="width:${sc.v}%;background:${scoreColor(sc.v,sc.inv)}"></i></div>
+      <div style="font-size:11px;color:var(--ink-3);margin-top:4px">${sc.note}</div>
+    </div>`).join('')}
+  </div>
+  <div class="alertbox i"><div class="ai">🌸</div><div><b>Em resumo</b><p style="color:var(--ink)">Sua carteira é bastante conservadora e tem ótima liquidez — perfeito pra dormir tranquila. O principal ponto de atenção é a concentração: ${s.maxInstName?`boa parte está na ${esc(s.maxInstName)}`:'poucas instituições'}. Diversificar novos aportes entre corretoras e começar aos poucos em ETFs/fundos deixaria sua carteira mais resistente.</p></div></div>
+  <div class="footer-note">Esta análise é educativa e baseada nos dados registrados. Não substitui orientação de um profissional.</div>`;
+}
+
+/* ---------- INVESTIR ---------- */
+function renderInvestir(){
+  const html=`
+  <div class="topbar"><div class="hello">＋ Investir</div></div>
+  <div class="section-sub" style="margin-top:6px">Registre um aporte em segundos ou traga seus extratos.</div>
+
+  <div class="card" style="background:linear-gradient(140deg,var(--rose),var(--rose-deep));color:#fff;text-align:center">
+    <div style="font-size:34px">💗</div>
+    <h2 style="color:#fff;margin:6px 0 2px">Investi hoje!</h2>
+    <p style="opacity:.9;font-size:13px;margin:0 0 14px">Toda vez que você aporta, seu patrimônio e sua meta se atualizam na hora.</p>
+    <button class="btn" style="background:#fff;color:var(--rose-deep)" onclick="openAporte()">Registrar aporte</button>
+  </div>
+
+  <div class="section-title">📄 Importar investimentos</div>
+  <div class="section-sub">Traga extratos do BTG, XP, PicPay e outros. Você confere tudo antes de salvar.</div>
+  <div class="card">
+    <label class="btn ghost" style="display:block" for="file-input">📎 Escolher arquivo (PDF, CSV, XLSX)</label>
+    <input id="file-input" type="file" accept=".csv,.xlsx,.xls,.pdf,.tsv" style="display:none" onchange="handleFile(this.files[0])">
+    <div id="import-status" style="font-size:12px;color:var(--ink-2);text-align:center;margin-top:10px"></div>
+    <div class="alertbox i" style="margin:12px 0 0"><div class="ai">ℹ️</div><div><p style="color:var(--ink);margin:0"><b>CSV, XLSX e PDF</b> são lidos automaticamente, direto no seu navegador — o arquivo não é enviado a nenhum servidor. Em PDFs a leitura é por reconhecimento de texto e pode errar em extratos com layout incomum ou PDFs escaneados (foto); por isso você sempre confere e corrige as linhas antes de confirmar.</p></div></div>
+  </div>
+
+  <div class="section-title">✍️ Adicionar manualmente</div>
+  <div class="card">
+    <p style="font-size:13px;color:var(--ink-2);margin:0 0 12px">Já tem um investimento pra cadastrar direto na carteira?</p>
+    <button class="btn sec" onclick="openAporte(true)">Cadastrar investimento existente</button>
+  </div>
+  <div class="footer-note">Formato CSV aceito — todos esses campos são reconhecidos automaticamente: <b>instituicao, ativo, tipo, modalidade, indexador, valor_aplicado, posicao_atual, rendimento, rendimento_12_meses, rentabilidade, vencimento</b>. Só <b>instituicao</b> e um valor são obrigatórios — o resto é opcional e pode ser ajustado na revisão.</div>`;
+  $('#screen-investir').innerHTML=html;
+}
+
+/* ---------- APORTE FLOW ---------- */
+let aporteDraft={};
+function openAporte(existing){
+  aporteDraft={inst:'',klass:'',type:'',name:'',value:'',date:todayISO(),note:'',existing:!!existing};
+  renderAporteSheet();
+  openSheet();
+}
+// escolher instituição/tipo reconstrói a folha inteira (pra marcar o botão certo como selecionado) —
+// por isso, antes de reconstruir, guardamos o que já foi digitado nos outros campos, senão eles somem.
+function syncAporteFields(){
+  const v=$('#ap-value'); if(v) aporteDraft.value=v.value;
+  const n=$('#ap-name'); if(n) aporteDraft.name=n.value;
+  const dt=$('#ap-date'); if(dt) aporteDraft.date=dt.value;
+  const nt=$('#ap-note'); if(nt) aporteDraft.note=nt.value;
+}
+function renderAporteSheet(){
+  const d=aporteDraft;
+  const insts=['BTG','XP','PicPay','Nubank','Inter','Itaú','Outro'];
+  const types=['CDB','Tesouro Direto','LCI/LCA','Fundo','ETF','Ação','Caixa','Outro'];
+  const klassOf={'CDB':'Renda Fixa','Tesouro Direto':'Renda Fixa','LCI/LCA':'Renda Fixa','Fundo':'Fundos','ETF':'ETFs','Ação':'ETFs','Caixa':'Caixa','Outro':'Outros'};
+  $('#sheet').innerHTML=`
+    <div class="grab"></div>
+    <h2>${d.existing?'Cadastrar investimento':'Investi hoje 💗'}</h2>
+    <div class="sub">${d.existing?'Adicione algo que você já tem.':'Preencha e comemore seu aporte.'}</div>
+
+    <div class="field"><label>Quanto você investiu?</label>
+      <div class="box"><span>R$</span><input id="ap-value" type="number" inputmode="decimal" placeholder="0,00" value="${d.value}" onchange="aporteDraft.value=this.value"></div></div>
+
+    <div class="field"><label>Onde você investiu?</label>
+      <div class="opts">${insts.map(i=>`<button class="opt ${d.inst===i?'on':''}" onclick="syncAporteFields();aporteDraft.inst='${i}';renderAporteSheet()">${i}</button>`).join('')}</div></div>
+
+    <div class="field"><label>Em qual tipo de investimento?</label>
+      <div class="opts">${types.map(t=>`<button class="opt ${d.type===t?'on':''}" onclick="syncAporteFields();aporteDraft.type='${t}';aporteDraft.klass='${klassOf[t]}';renderAporteSheet()">${t}</button>`).join('')}</div></div>
+
+    <div class="field"><label>Qual o produto? (opcional)</label>
+      <div class="box"><input id="ap-name" type="text" placeholder="Ex: CDB 110% CDI, IVVB11..." value="${esc(d.name)}"></div></div>
+
+    <div class="field"><label>Data do aporte</label>
+      <div class="box"><input id="ap-date" type="date" value="${d.date}"></div></div>
+
+    <div class="field"><label>Observação (opcional)</label>
+      <div class="box"><input id="ap-note" type="text" placeholder="Ex: parte do 13º" value="${esc(d.note)}"></div></div>
+
+    <button class="btn" onclick="submitAporte()">${d.existing?'Adicionar à carteira':'Confirmar aporte ✨'}</button>
+    <button class="btn ghost" style="margin-top:8px" onclick="closeSheet()">Cancelar</button>
+  `;
+}
+function submitAporte(){
+  const v=parseFloat(($('#ap-value')?.value||'').replace(',','.'))||0;
+  aporteDraft.value=v;
+  aporteDraft.name=$('#ap-name')?.value||'';
+  aporteDraft.date=$('#ap-date')?.value||todayISO();
+  aporteDraft.note=$('#ap-note')?.value||'';
+  const d=aporteDraft;
+  if(!v||v<=0){ shake('#ap-value'); return; }
+  if(!d.inst){ toast('Escolha a instituição'); return; }
+  if(!d.type){ toast('Escolha o tipo'); return; }
+
+  // if leaving demo, clear demo portfolio first (once)
+  if(S.demo){ S.demo=false; S.holdings=[]; S.history=[]; S.contributions=[]; }
+
+  const klass=d.klass||'Outros';
+  // merge into existing holding of same inst+name, else new
+  let h=S.holdings.find(x=>x.inst===d.inst && x.name.toLowerCase()===(d.name||d.type).toLowerCase());
+  if(h){ h.invested+=v; h.current+=v; }
+  else{
+    h={id:'h'+Date.now(), inst:d.inst, klass, type:d.type, name:d.name||d.type, invested:v, current:v,
+       rate:'—', maturity:null, liquidity: klass==='Caixa'?'Diária':'—', issuer:d.inst, fgc: klass==='Renda Fixa',
+       category:d.type, admFee:null, perfFee:0, health:'g'};
+    S.holdings.push(h);
+  }
+  S.transactions.push({date:d.date, inst:d.inst, type:d.type, name:d.name||d.type, value:v, note:d.note});
+
+  // update history (this month's net worth)
+  const tot=total();
+  if(!S.history.length) S.history=[tot]; else S.history[S.history.length-1]=tot;
+
+  // contributions & streak (per calendar month of aporte)
+  let xp=100; let leveledMsg='';
+  const prevLevel=level();
+  addXP(100);
+  if(!d.existing){
+    // streak: count if this is a new month with a contribution
+    S.streak=(S.streak||0)+ (isNewContribMonth(d.date)?1:0);
+    if(S.streak>0 && S.streak%3===0){ addXP(500); xp+=500; }
+  }
+  const newLevel=level();
+  if(newLevel.min>prevLevel.min) leveledMsg=`Você subiu para ${newLevel.icon} ${newLevel.name}!`;
+
+  save(); renderAll(); closeSheet();
+
+  if(d.existing){ celebrate('Investimento adicionado!', `${esc(h.name)} entrou na sua carteira.`, xp); }
+  else{
+    const far=S.profile.goal-total();
+    celebrate('Aporte registrado! 💗', leveledMsg || `Você está ${BRL(far)} mais perto do seu milhão.`, xp);
+  }
+}
+function isNewContribMonth(date){
+  const mk=monthKey(date);
+  const has=(S._contribMonths||[]).includes(mk);
+  S._contribMonths=(S._contribMonths||[]).concat(has?[]:[mk]);
+  return !has;
+}
+
+/* ---------- EDITAR / EXCLUIR INVESTIMENTO ---------- */
+let editDraft=null;
+const EDIT_KLASS={'CDB':'Renda Fixa','Tesouro Direto':'Renda Fixa','LCI/LCA':'Renda Fixa','Fundo':'Fundos','ETF':'ETFs','Ação':'ETFs','Caixa':'Caixa','Criptoativo':'Outros','Outro':'Outros'};
+function openEditHolding(id){
+  const h=S.holdings.find(x=>String(x.id)===String(id));
+  if(!h){ toast('Não encontrei esse investimento.'); return; }
+  editDraft=Object.assign({},h);
+  renderEditSheet();
+  openSheet();
+}
+// guarda o que já foi digitado antes de redesenhar a folha (mesmo cuidado do cadastro)
+function syncEditFields(){
+  const g=id=>$('#'+id);
+  if(g('ed-name')) editDraft.name=g('ed-name').value;
+  if(g('ed-current')) editDraft.current=g('ed-current').value;
+  if(g('ed-invested')) editDraft.invested=g('ed-invested').value;
+  if(g('ed-rate')) editDraft.rate=g('ed-rate').value;
+  if(g('ed-maturity')) editDraft.maturity=g('ed-maturity').value;
+  if(g('ed-issuer')) editDraft.issuer=g('ed-issuer').value;
+  if(g('ed-liquidity')) editDraft.liquidity=g('ed-liquidity').value;
+}
+function renderEditSheet(){
+  const d=editDraft;
+  const insts=['BTG','XP','PicPay','Nubank','Inter','Itaú','Outro'];
+  const types=['CDB','Tesouro Direto','LCI/LCA','Fundo','ETF','Ação','Caixa','Criptoativo','Outro'];
+  $('#sheet').innerHTML=`
+    <div class="grab"></div>
+    <h2>Editar investimento</h2>
+    <div class="sub">Altere o que precisar e salve. Tudo fica guardado neste aparelho.</div>
+
+    <div class="field"><label>Nome do investimento</label>
+      <div class="box"><input id="ed-name" type="text" value="${esc(d.name||'')}"></div></div>
+
+    <div class="field"><label>Posição atual (quanto vale hoje)</label>
+      <div class="box"><span>R$</span><input id="ed-current" type="number" inputmode="decimal" value="${d.current!=null?d.current:''}"></div></div>
+
+    <div class="field"><label>Valor aplicado${d.noInvested?' (ainda não informado)':''}</label>
+      <div class="box"><span>R$</span><input id="ed-invested" type="number" inputmode="decimal" placeholder="${d.noInvested?'Preencha pra calcular a rentabilidade':'0,00'}" value="${d.noInvested?'':(d.invested!=null?d.invested:'')}"></div></div>
+
+    <div class="field"><label>Instituição</label>
+      <div class="opts">${insts.map(i=>`<button class="opt ${d.inst===i?'on':''}" onclick="syncEditFields();editDraft.inst='${i}';renderEditSheet()">${i}</button>`).join('')}</div></div>
+
+    <div class="field"><label>Tipo</label>
+      <div class="opts">${types.map(t=>`<button class="opt ${d.type===t?'on':''}" onclick="syncEditFields();editDraft.type='${t}';editDraft.klass='${EDIT_KLASS[t]||'Outros'}';renderEditSheet()">${t}</button>`).join('')}</div></div>
+
+    <div class="field"><label>Rentabilidade contratada</label>
+      <div class="box"><input id="ed-rate" type="text" placeholder="Ex: 110% do CDI, IPCA + 6%" value="${esc(d.rate&&d.rate!=='—'?d.rate:'')}"></div></div>
+
+    <div class="field"><label>Vencimento (deixe vazio se não tiver)</label>
+      <div class="box"><input id="ed-maturity" type="date" value="${d.maturity||''}"></div></div>
+
+    <div class="field"><label>Emissor</label>
+      <div class="box"><input id="ed-issuer" type="text" value="${esc(d.issuer||'')}"></div></div>
+
+    <div class="field"><label>Liquidez</label>
+      <div class="box"><input id="ed-liquidity" type="text" placeholder="Ex: Diária, No vencimento" value="${esc(d.liquidity||'')}"></div></div>
+
+    <div class="field"><label>Tem cobertura do FGC?</label>
+      <div class="opts">
+        <button class="opt ${d.fgc?'on':''}" onclick="syncEditFields();editDraft.fgc=true;renderEditSheet()">Sim</button>
+        <button class="opt ${!d.fgc?'on':''}" onclick="syncEditFields();editDraft.fgc=false;renderEditSheet()">Não</button>
+      </div></div>
+
+    <button class="btn" onclick="saveEditHolding()">Salvar alterações</button>
+    <button class="btn ghost" style="margin-top:8px;color:var(--alert);border-color:var(--alert-bg)" onclick="confirmDeleteHolding()">Excluir este investimento</button>
+    <button class="btn ghost" style="margin-top:8px" onclick="closeSheet()">Cancelar</button>
+  `;
+}
+function saveEditHolding(){
+  syncEditFields();
+  const d=editDraft;
+  const h=S.holdings.find(x=>String(x.id)===String(d.id));
+  if(!h){ toast('Não encontrei esse investimento.'); return; }
+  const cur=parseFloat(String(d.current).replace(',','.'));
+  if(!(cur>0)){ shake('#ed-current'); toast('Informe quanto o investimento vale hoje.'); return; }
+  const invRaw=String(d.invested==null?'':d.invested).trim();
+  const inv=invRaw===''? null : parseFloat(invRaw.replace(',','.'));
+
+  h.name=(d.name||'').trim()||h.type||'Investimento';
+  h.current=cur;
+  if(inv!=null && inv>0){ h.invested=inv; delete h.noInvested; }
+  else { h.invested=cur; h.noInvested=true; }
+  h.inst=d.inst||h.inst;
+  if(d.type){ h.type=d.type; h.klass=EDIT_KLASS[d.type]||h.klass||'Outros'; }
+  h.rate=(d.rate||'').trim()||'—';
+  h.maturity=(d.maturity||'')||null;
+  h.issuer=(d.issuer||'').trim()||h.inst;
+  h.liquidity=(d.liquidity||'').trim()||'—';
+  h.fgc=!!d.fgc;
+
+  const t=total();
+  if(!S.history.length) S.history=[t]; else S.history[S.history.length-1]=t;
+  save(); renderAll(); closeSheet();
+  toast('Investimento atualizado 🌸');
+}
+function confirmDeleteHolding(){
+  const d=editDraft;
+  $('#sheet').innerHTML=`<div class="grab"></div>
+    <h2>Excluir investimento?</h2>
+    <p style="color:var(--ink-2);font-size:13.5px;margin:8px 0 16px"><b>${esc(d.name||'')}</b> (${esc(d.inst||'')}) será removido da sua carteira. Isto não pode ser desfeito.</p>
+    <button class="btn" style="background:var(--alert)" onclick="deleteHolding()">Sim, excluir</button>
+    <button class="btn ghost" style="margin-top:8px" onclick="renderEditSheet()">Cancelar</button>`;
+}
+function deleteHolding(){
+  const id=editDraft&&editDraft.id;
+  const i=S.holdings.findIndex(x=>String(x.id)===String(id));
+  if(i<0){ toast('Não encontrei esse investimento.'); closeSheet(); return; }
+  S.holdings.splice(i,1);
+  const t=total();
+  if(!S.history.length) S.history=[t]; else S.history[S.history.length-1]=t;
+  save(); renderAll(); closeSheet();
+  toast('Investimento excluído.');
+}
+
+/* ---------- IMPORT FLOW ---------- */
+function handleFile(file){
+  if(!file) return;
+  const status=$('#import-status');
+  status.innerHTML='<span class="spinner"></span> Lendo '+esc(file.name)+'...';
+  const ext=(file.name.split('.').pop()||'').toLowerCase();
+  if(ext==='csv'||ext==='tsv'){
+    const r=new FileReader();
+    r.onload=e=>{ try{ const rows=parseCSV(e.target.result); reviewImport(rows,file.name); }catch(err){ status.textContent='Não consegui ler esse arquivo. Tente conferir manualmente.'; reviewImport([],file.name); } };
+    r.readAsText(file);
+  } else if(ext==='xlsx'||ext==='xls'){
+    if(!window.XLSX){ status.textContent='Leitor de planilha indisponível — abrindo revisão manual.'; reviewImport([],file.name); return; }
+    const r=new FileReader();
+    r.onload=e=>{ try{
+      const wb=XLSX.read(new Uint8Array(e.target.result),{type:'array'});
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      const arr=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+      reviewImport(rowsFromMatrix(arr),file.name);
+    }catch(err){ status.textContent='Erro ao ler planilha — abrindo revisão manual.'; reviewImport([],file.name); } };
+    r.readAsArrayBuffer(file);
+  } else if(ext==='pdf'){
+    if(!window.pdfjsLib){ status.textContent='Leitor de PDF indisponível agora — abrindo revisão manual.'; reviewImport([],file.name); return; }
+    const r=new FileReader();
+    r.onload=async e=>{
+      try{
+        const rows = await parsePDF(new Uint8Array(e.target.result));
+        if(!rows.length){
+          status.innerHTML='📄 Li o PDF, mas não reconheci linhas de investimento nele (pode ser um extrato em formato diferente, ou um PDF escaneado/foto, que ainda não sei ler). Adicione manualmente abaixo — ou confira se o PDF tem texto selecionável.';
+        } else {
+          status.innerHTML=`✅ Lido! Encontrei ${rows.length} ${rows.length>1?'possíveis investimentos':'possível investimento'} — confira e corrija abaixo antes de confirmar.`;
+        }
+        reviewImport(rows,file.name);
+      }catch(err){
+        status.textContent='Não consegui ler esse PDF automaticamente. Adicione as linhas manualmente abaixo.';
+        reviewImport([],file.name);
+      }
+    };
+    r.readAsArrayBuffer(file);
+  } else { status.textContent='Formato não suportado.'; }
+}
+
+/* ---------- client-side PDF text extraction + heuristic row parsing ---------- */
+async function pdfToLines(bytes){
+  const doc = await pdfjsLib.getDocument({data:bytes}).promise;
+  const lines=[];
+  for(let p=1;p<=doc.numPages;p++){
+    const page = await doc.getPage(p);
+    const content = await page.getTextContent();
+    // group items into lines by y-position (rounded), then sort each line by x
+    const rows=new Map();
+    content.items.forEach(it=>{
+      if(!it.str || !it.str.trim()) return;
+      const y = Math.round(it.transform[5]/2)*2; // tolerance bucket
+      if(!rows.has(y)) rows.set(y,[]);
+      rows.get(y).push({x:it.transform[4], s:it.str});
+    });
+    const ys=[...rows.keys()].sort((a,b)=>b-a); // top to bottom (pdf y grows upward)
+    ys.forEach(y=>{
+      const line=rows.get(y).sort((a,b)=>a.x-b.x).map(o=>o.s).join(' ').replace(/\s+/g,' ').trim();
+      if(line) lines.push(line);
+    });
+  }
+  return lines;
+}
+const INST_KEYWORDS=['BTG Pactual','BTG','XP Investimentos','XP','PicPay','Nubank','Nu Invest','Itaú','Itau','Bradesco','Santander','Banco do Brasil','Caixa Econômica','Inter','C6 Bank','Safra','Rico','Clear','Modal','Sicredi','Sicoob'];
+const TYPE_PATTERNS=[
+  {re:/tesouro\s*(selic|ipca|prefixado|direto)?/i, type:'Tesouro Direto', klass:'Renda Fixa'},
+  {re:/\bcdb\b/i, type:'CDB', klass:'Renda Fixa'},
+  {re:/\blci\b|\blca\b/i, type:'LCI/LCA', klass:'Renda Fixa'},
+  {re:/\bcri\b|\bcra\b/i, type:'CRI/CRA', klass:'Renda Fixa'},
+  {re:/deb[êe]ntures?/i, type:'Debênture', klass:'Renda Fixa'},
+  {re:/\bfic\b|\bfim\b|fundo/i, type:'Fundo', klass:'Fundos'},
+  {re:/\betf\b/i, type:'ETF', klass:'ETFs'},
+  {re:/a[çc][ãa]o|a[çc][õo]es/i, type:'Ação', klass:'ETFs'},
+  {re:/poupan[çc]a/i, type:'Poupança', klass:'Caixa'},
+  {re:/\b[A-Z]{4}11\b/, type:'ETF', klass:'ETFs'},      // tickers estilo ETF/FII: BOVA11, IVVB11...
+  {re:/\b[A-Z]{4}[3-6]\b/, type:'Ação', klass:'ETFs'},   // tickers estilo ação: PETR4, VALE3...
+];
+const VALUE_RE=/(?:R\$\s?)?(\d{1,3}(?:\.\d{3})*,\d{2})(?!\d)/g;
+function lineValue(line){
+  const matches=[...line.matchAll(VALUE_RE)];
+  if(!matches.length) return null;
+  const last=matches[matches.length-1][1];
+  const n=parseFloat(last.replace(/\./g,'').replace(',','.'));
+  return isNaN(n)?null:n;
+}
+function findInstInLine(line){
+  let best='';
+  for(const k of INST_KEYWORDS){ if(line.toLowerCase().includes(k.toLowerCase()) && k.length>best.length) best=k; }
+  return best;
+}
+async function parsePDF(bytes){
+  const lines = await pdfToLines(bytes);
+  const out=[];
+  let currentInst=''; // rastreia a instituição do cabeçalho de seção mais recente, linha a linha
+  lines.forEach(line=>{
+    const found=findInstInLine(line);
+    if(found) currentInst=found.replace(/ (Investimentos|Pactual|Econômica)$/,'');
+    if(line.length<6) return;
+    const tp = TYPE_PATTERNS.find(t=>t.re.test(line));
+    if(!tp) return;
+    const val = lineValue(line);
+    if(!val || val<=0) return;
+    // product name: strip trailing monetary values and excess whitespace, cap length
+    let name = line.replace(VALUE_RE,'').replace(/\s{2,}/g,' ').trim();
+    if(name.length>60) name=name.slice(0,60).trim();
+    if(!name) name=tp.type;
+    out.push({inst:currentInst, type:tp.type, name, value:val, rate:'', maturity:''});
+  });
+  // de-duplicate identical (name+value) lines that PDF sometimes repeats (headers/footers per page)
+  const seen=new Set(); const dedup=[];
+  out.forEach(r=>{ const k=r.name+'|'+r.value; if(!seen.has(k)){ seen.add(k); dedup.push(r); } });
+  return dedup.slice(0,40); // sanity cap
+}
+function splitCSVLine(line, sep){
+  // separador respeita campos entre aspas (ex.: "15,38% a.a." não deve virar duas colunas)
+  const out=[]; let cur=''; let inQ=false;
+  for(let i=0;i<line.length;i++){
+    const c=line[i];
+    if(inQ){
+      if(c==='"'){ if(line[i+1]==='"'){ cur+='"'; i++; } else { inQ=false; } }
+      else cur+=c;
+    } else {
+      if(c==='"') inQ=true;
+      else if(c===sep){ out.push(cur); cur=''; }
+      else cur+=c;
+    }
+  }
+  out.push(cur);
+  return out.map(s=>s.trim());
+}
+function parseCSV(txt){
+  const sep = txt.indexOf(';')>-1 && txt.indexOf(';')<txt.indexOf('\n') ? ';' : (txt.indexOf('\t')>-1?'\t':',');
+  const lines=txt.split(/\r?\n/).filter(l=>l.trim());
+  const matrix=lines.map(l=>splitCSVLine(l,sep));
+  return rowsFromMatrix(matrix);
+}
+function xlsxSerialToBR(n){
+  // converte número de série de data do Excel/XLSX (ex.: 48553) pra DD/MM/AAAA
+  if(typeof n!=='number'||!isFinite(n)||n<1||n>100000) return null;
+  const ms=Math.round((n-25569)*86400*1000);
+  const d=new Date(ms);
+  if(isNaN(d.getTime())) return null;
+  const dd=String(d.getUTCDate()).padStart(2,'0');
+  const mm=String(d.getUTCMonth()+1).padStart(2,'0');
+  return `${dd}/${mm}/${d.getUTCFullYear()}`;
+}
+function rowsFromMatrix(matrix){
+  if(!matrix.length) return [];
+  // detect header
+  const head=matrix[0].map(x=>String(x).trim().toLowerCase());
+  // exact match first (so e.g. "rendimento" doesn't swallow "rendimento_12_meses"), then substring fallback
+  const idxOf=(...keys)=>{
+    for(const k of keys){ const i=head.indexOf(k); if(i>-1) return i; }
+    return head.findIndex(h=>keys.some(k=>h.includes(k)));
+  };
+  const iInst=idxOf('instituicao','instituição','banco','corretora','emissor');
+  const iName=idxOf('ativo','produto','nome','descricao','descrição');
+  const iType=idxOf('tipo','classe');
+  const iModal=idxOf('modalidade');
+  const iIndex=idxOf('indexador');
+  const iValA=idxOf('valor_aplicado','valor aplicado','vlr aplicado','aplicado','valor investido');
+  const iValP=idxOf('posicao_atual','posição_atual','posicao atual','posição atual','saldo atual','valor atual','posicao','posição','valor de mercado');
+  const iRend12=idxOf('rendimento_12_meses','rendimento 12 meses','rendimento_12m');
+  let iRend=-1; head.forEach((h,i)=>{ if(iRend===-1 && h.includes('rendimento') && i!==iRend12) iRend=i; });
+  const iRate=idxOf('rentabilidade','rentab','taxa');
+  const iMat=idxOf('vencim','venc');
+  const iValGeneric=idxOf('valor','saldo','montante','total'); // legacy single-column CSVs (ex.: instituicao,tipo,produto,valor,rentabilidade,vencimento)
+  const hasHeader = iInst>-1 || iName>-1 || iValA>-1 || iValP>-1 || iValGeneric>-1;
+  const body = hasHeader? matrix.slice(1):matrix;
+  const parseNum=s=>{
+    s=String(s==null?'':s).trim();
+    if(!s) return 0;
+    s=s.replace(/^R\$\s?/,'').trim();
+    // if it has a comma, treat as pt-BR format (1.234,56) -> strip thousand dots, comma->decimal point
+    // otherwise assume it's already a plain decimal number (17800.0, 18679.97 — como no CSV de extrato)
+    if(s.includes(',')) s=s.replace(/\./g,'').replace(',', '.');
+    const n=parseFloat(s);
+    return isNaN(n)?0:n;
+  };
+  return body.map(r=>{
+    const inst = iInst>-1? r[iInst]||'' : (r[0]||'');
+    const name = iName>-1? r[iName]||'' : (r[1]||'');
+    const type = iType>-1? r[iType]||'' : '';
+    const modalidade = iModal>-1? r[iModal]||'' : '';
+    const indexador = iIndex>-1? r[iIndex]||'' : '';
+    const rendA = iRend>-1? parseNum(r[iRend]) : 0;
+    const rendB = iRend12>-1? parseNum(r[iRend12]) : 0;
+    const rendimento = rendA || rendB;
+    let invested = iValA>-1? parseNum(r[iValA]) : 0;
+    let current = iValP>-1? parseNum(r[iValP]) : (iValGeneric>-1? parseNum(r[iValGeneric]) : parseNum(r[r.length-1]));
+    if(!current && invested) current = invested; // só temos o valor aplicado
+    if(!invested && current) invested = rendimento? (current-rendimento) : current; // deriva aplicado quando só vem posição + rendimento
+    const rate = iRate>-1? r[iRate]||'' : '';
+    const rawMat = iMat>-1? r[iMat] : '';
+    const maturity = (typeof rawMat==='number') ? (xlsxSerialToBR(rawMat)||String(rawMat)) : (rawMat||''); // XLSX pode entregar data como número de série
+    return {inst, name, type, modalidade, indexador, invested, current, rendimento, rate, maturity};
+  }).filter(x=>x.current>0 || x.invested>0 || x.name);
+}
+let importRows=[];
+function blankImportRow(){ return {inst:'',type:'',modalidade:'',indexador:'',name:'',invested:'',current:'',rate:'',maturity:''}; }
+function reviewImport(rows,fname){
+  importRows = rows.length? rows.map(r=>({...blankImportRow(),...r})) : [blankImportRow()];
+  renderImportSheet(fname);
+  openSheet();
+}
+function importRowCard(r,i,fname){
+  const field=(lbl,val,onchange,ph,type)=>`<div class="field"><label>${lbl}</label><div class="box"><input ${type?'type="'+type+'"':''} value="${esc(val==null?'':val)}" placeholder="${esc(ph||'')}" onchange="${onchange}"></div></div>`;
+  return `<div class="imp-card">
+    <div class="hd"><b>💼 Investimento ${i+1}</b><span class="imp-del" onclick="importRows.splice(${i},1);renderImportSheet('${esc(fname)}')">✕ remover</span></div>
+    <div class="imp-grid2">
+      ${field('Produto (ativo)', r.name, `importRows[${i}].name=this.value`, 'Ex: CDB PicPay 6 anos')}
+      ${field('Instituição', r.inst, `importRows[${i}].inst=this.value`, 'Ex: BTG, XP, Nubank...')}
+      ${field('Tipo', r.type, `importRows[${i}].type=this.value`, 'CDB, LCA, Fundo, ETF...')}
+      ${field('Modalidade', r.modalidade, `importRows[${i}].modalidade=this.value`, 'Prefixado / Pós-fixado')}
+      ${field('Indexador', r.indexador, `importRows[${i}].indexador=this.value`, 'CDI, IPCA, Selic...')}
+      ${field('Rentabilidade', r.rate, `importRows[${i}].rate=this.value`, 'Ex: 113% do CDI')}
+      ${field('Valor aplicado (R$)', r.invested, `importRows[${i}].invested=this.value`, '0,00', 'number')}
+      ${field('Posição atual (R$)', r.current, `importRows[${i}].current=this.value`, '0,00', 'number')}
+      <div class="field full"><label>Vencimento</label><div class="box"><input value="${esc(r.maturity||'')}" placeholder="DD/MM/AAAA" onchange="importRows[${i}].maturity=this.value"></div></div>
+    </div>
+  </div>`;
+}
+function renderImportSheet(fname){
+  const totalAplicado=importRows.reduce((a,r)=>a+(parseFloat(String(r.invested).replace(',','.'))||0),0);
+  const totalAtual=importRows.reduce((a,r)=>a+(parseFloat(String(r.current).replace(',','.'))||0),0);
+  const cardsHtml=importRows.map((r,i)=>importRowCard(r,i,fname)).join('');
+  $('#sheet').innerHTML=`
+    <div class="grab"></div>
+    <h2>Encontramos estes investimentos</h2>
+    <div class="sub">De <b>${esc(fname)}</b> — confira, corrija e confirme cada campo. Você tem o controle. 💗</div>
+    ${cardsHtml}
+    <button class="btn ghost" style="margin-top:10px" onclick="importRows.push(blankImportRow());renderImportSheet('${esc(fname)}')">＋ Adicionar investimento</button>
+    <div style="text-align:center;margin:14px 0;font-size:13px;color:var(--ink-2)">Valor aplicado: <b class="tnum" style="color:var(--ink)">${BRL(totalAplicado)}</b><br>Posição atual: <b class="tnum" style="font-family:var(--fdisplay);font-size:18px;color:var(--rose)">${BRL(totalAtual)}</b></div>
+    <button class="btn" onclick="confirmImport()">✅ Confirmar importação</button>
+    <button class="btn ghost" style="margin-top:8px" onclick="closeSheet()">❌ Cancelar</button>
+  `;
+}
+const KLASS_BY_TYPE={'cdb':'Renda Fixa','lci':'Renda Fixa','lca':'Renda Fixa','lci/lca':'Renda Fixa','cri':'Renda Fixa','cra':'Renda Fixa','cri/cra':'Renda Fixa','debênture':'Renda Fixa','debenture':'Renda Fixa','tesouro direto':'Renda Fixa','tesouro':'Renda Fixa','poupança':'Caixa','poupanca':'Caixa','caixa':'Caixa','fundo':'Fundos','fic':'Fundos','fim':'Fundos','etf':'ETFs','ação':'ETFs','acao':'ETFs','ações':'ETFs','acoes':'ETFs','criptoativo':'Outros','cripto':'Outros','criptomoeda':'Outros'};
+function confirmImport(){
+  const klassGuess=t=>{ t=(t||'').toLowerCase(); if(/cripto/.test(t))return'Outros'; if(/cdb|tesouro|lci|lca|cri|cra|deb|renda fix|selic|ipca/.test(t))return'Renda Fixa'; if(/fundo|fic|fim/.test(t))return'Fundos'; if(/etf|ivvb|bova|small|11/.test(t))return'ETFs'; if(/caixa|reserva|poupan/.test(t))return'Caixa'; return'Renda Fixa';};
+  const typeGuess=t=>{ t=(t||'').toLowerCase(); if(/cripto/.test(t))return'Criptoativo'; if(/tesouro|selic|ipca/.test(t))return'Tesouro Direto'; if(/cdb/.test(t))return'CDB'; if(/\blca\b/.test(t))return'LCA'; if(/\blci\b/.test(t))return'LCI'; if(/etf|ivvb|bova|11/.test(t))return'ETF'; if(/fundo|fic|fim/.test(t))return'Fundo'; if(/caixa|reserva|poupan/.test(t))return'Caixa'; return'CDB';};
+  const num=v=>parseFloat(String(v==null?'':v).replace(',','.'))||0;
+  const valid=importRows.map(r=>({...r, invested:num(r.invested), current:num(r.current)}))
+    .filter(r=>r.current>0 || r.invested>0 || r.name || r.inst);
+  if(!valid.length){ toast('Adicione ao menos um investimento com valor.'); return; }
+  S.demo=false;
+  S.holdings = valid.map((r,i)=>{
+    const nm=r.name||r.type||'Investimento';
+    const typeRaw=(r.type||'').trim();
+    const klass = KLASS_BY_TYPE[typeRaw.toLowerCase()] || klassGuess(nm+' '+typeRaw+' '+(r.modalidade||''));
+    const type = typeRaw || typeGuess(nm);
+    const invested = r.invested || r.current || 0;
+    const current = r.current || r.invested || 0;
+    const modalidade = r.modalidade && r.modalidade!=='—' ? r.modalidade : '';
+    const indexador = r.indexador && r.indexador!=='—' ? r.indexador : '';
+    const rate = (r.rate && r.rate!=='—') ? r.rate : (indexador || '—');
+    return {id:'i'+Date.now()+i, inst:r.inst||'—', klass, type, name:nm,
+      invested, current, rate, maturity:normDate(r.maturity), liquidity: klass==='Caixa'?'Diária':'—',
+      issuer:r.inst||'—', fgc: klass==='Renda Fixa', category: modalidade||type||klass,
+      admFee:null, perfFee:0, health:'g', modalidade, indexador};
+  });
+  const tot=total();
+  S.history=[tot]; // start fresh series from imported total
+  addXP(200);
+  save(); renderAll(); closeSheet();
+  celebrate('Carteira importada! 💎', `${valid.length} investimentos consolidados — ${BRL(tot)}.`, 200);
+  go('carteira');
+}
+function normDate(s){ if(!s)return null; s=String(s).trim();
+  let m=s.match(/(\d{2})\/(\d{2})\/(\d{4})/); if(m)return m[3]+'-'+m[2]+'-'+m[1];
+  m=s.match(/(\d{4})-(\d{2})-(\d{2})/); if(m)return s.slice(0,10); return null; }
+
+/* ---------- PERFORMANCE ---------- */
+let perfTab='evolucao';
+function renderPerformance(){
+  const html=`
+  <div class="topbar"><div class="hello">📊 Sua evolução</div></div>
+  <div class="seg">
+    <button class="${perfTab==='evolucao'?'on':''}" onclick="switchPerf('evolucao')">Evolução</button>
+    <button class="${perfTab==='jornada'?'on':''}" onclick="switchPerf('jornada')">Jornada</button>
+    <button class="${perfTab==='relatorios'?'on':''}" onclick="switchPerf('relatorios')">Relatórios</button>
+  </div>
+  <div id="perf-body"></div>`;
+  $('#screen-performance').innerHTML=html;
+  renderPerfBody();
+}
+function switchPerf(t){ perfTab=t; renderPerformance(); }
+function renderPerfBody(){
+  const b=$('#perf-body'); if(!b)return;
+  if(perfTab==='evolucao') b.innerHTML=perfEvolucao();
+  else if(perfTab==='jornada') b.innerHTML=perfJornada();
+  else b.innerHTML=perfRelatorios();
+}
+function perfEvolucao(){
+  const contribItems=S.contributions.length? S.contributions.map(c=>({label:c.label,v:c.value})) : [{label:'—',v:0}];
+  const totalAportes=S.contributions.reduce((a,c)=>a+c.value,0);
+  const rend = S.history.length>1? S.history[S.history.length-1]-S.history[0]-totalAportes : 0;
+  return `
+  <div class="card"><div class="eyebrow">📈 Evolução patrimonial</div>
+    <div style="margin-top:8px">${lineChart(S.history,{labels:histLabels()})}</div></div>
+  <div class="card"><div class="eyebrow">💗 Aportes por mês</div>
+    <div style="margin-top:8px">${barChart(contribItems,{color:'var(--rose)'})}</div>
+    <div style="font-size:12.5px;color:var(--ink-2);margin-top:4px;text-align:center">Total aportado no período: <b style="color:var(--ink)">${BRL(totalAportes)}</b></div></div>
+  <div class="card" style="display:flex;gap:12px;text-align:center">
+    <div style="flex:1"><div class="eyebrow">Rendimentos</div><div class="tnum ${rend>=0?'pos':'neg'}" style="font-family:var(--fdisplay);font-size:22px;font-weight:600;margin-top:4px">${rend>=0?'+':''}${BRL(rend)}</div><div style="font-size:11px;color:var(--ink-3)">o que seu dinheiro rendeu</div></div>
+    <div style="width:1px;background:var(--line)"></div>
+    <div style="flex:1"><div class="eyebrow">Aportes</div><div class="tnum" style="font-family:var(--fdisplay);font-size:22px;font-weight:600;margin-top:4px;color:var(--rose)">${BRL(totalAportes)}</div><div style="font-size:11px;color:var(--ink-3)">o que você guardou</div></div>
+  </div>
+  <div class="footer-note">Seu dinheiro está trabalhando por você. 💗</div>`;
+}
+function perfJornada(){
+  const tot=total();
+  const marks=[
+    {v:0,ic:'🌱',nm:'Começando'},
+    {v:100000,ic:'🌷',nm:'R$ 100 mil'},
+    {v:250000,ic:'🌸',nm:'R$ 250 mil'},
+    {v:500000,ic:'💎',nm:'R$ 500 mil'},
+    {v:750000,ic:'👑',nm:'R$ 750 mil'},
+    {v:1000000,ic:'🏆',nm:'R$ 1 milhão'},
+  ];
+  let currentIdx=0; marks.forEach((m,i)=>{ if(tot>=m.v) currentIdx=i; });
+  const steps=marks.map((m,i)=>{
+    const done= tot>=m.v && m.v>0;
+    const current = i===currentIdx+1 || (i===currentIdx && !(tot>=marks[Math.min(i+1,marks.length-1)].v));
+    const cls = done?'done': (i===Math.min(currentIdx+1,marks.length-1)?'current':'');
+    const sub = done? 'Conquistado 🎉' : m.v>tot? `Faltam ${BRL(m.v-tot)}` : '';
+    return `<div class="jstep ${cls}"><div class="node">${m.ic}</div><div class="jt"><b>${m.nm}</b><small>${sub}</small></div></div>`;
+  }).join('');
+  return `
+  <div class="card" style="text-align:center;background:linear-gradient(150deg,var(--rose) 0%,var(--wine) 130%);color:#fff">
+    <div class="eyebrow" style="color:#fff;opacity:.85">Sua jornada até o milhão</div>
+    <div style="font-family:var(--fdisplay);font-size:34px;font-weight:600" class="tnum">${(tot/1000000*100).toFixed(1)}%</div>
+    <div style="opacity:.9;font-size:13px">${BRL(tot)} construídos até aqui 🌸</div>
+  </div>
+  <div class="journey">${steps}</div>
+  <div class="footer-note">Você não precisa acertar tudo. Precisa continuar. 💗</div>`;
+}
+function perfRelatorios(){
+  return `
+  <div class="section-title">💌 Relatórios</div>
+  <div class="section-sub">Resumos visuais pra acompanhar sua evolução sem esforço.</div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div><b style="font-family:var(--fdisplay);font-size:15px">Resumo semanal</b><div style="font-size:12px;color:var(--ink-2)">Curto e visual, toda segunda.</div></div>
+      <label class="switch"><input type="checkbox" ${S.profile.weekly?'checked':''} onchange="S.profile.weekly=this.checked;save()"></label>
+    </div>
+    <button class="btn ghost" style="margin-top:12px" onclick="showReport('semanal')">Ver prévia do resumo semanal</button>
+  </div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div><b style="font-family:var(--fdisplay);font-size:15px">Relatório mensal</b><div style="font-size:12px;color:var(--ink-2)">Completo, todo dia 1º.</div></div>
+      <label class="switch"><input type="checkbox" ${S.profile.monthly?'checked':''} onchange="S.profile.monthly=this.checked;save()"></label>
+    </div>
+    <button class="btn ghost" style="margin-top:12px" onclick="showReport('mensal')">Ver prévia do relatório mensal</button>
+  </div>
+  <div class="alertbox i"><div class="ai">✉️</div><div><p style="color:var(--ink);margin:0">O envio automático por e-mail precisa de uma conexão de servidor (ainda não ativa). Aqui você já vê a prévia de como ele chega.</p></div></div>`;
+}
+function showReport(kind){
+  const tot=total(), mc=monthChange(), c12=change12();
+  const totalAportes=S.contributions.reduce((a,c)=>a+c.value,0);
+  const best=[...S.holdings].sort((a,b)=>((b.current-b.invested)/(b.invested||1))-((a.current-a.invested)/(a.invested||1)))[0];
+  const worst=[...S.holdings].sort((a,b)=>((a.current-a.invested)/(a.invested||1))-((b.current-b.invested)/(b.invested||1)))[0];
+  let body='';
+  if(kind==='semanal'){
+    body=`<div class="sub">💌 Seu resumo da semana</div>
+    <div class="card flat"><div class="eyebrow">Patrimônio</div><div class="tnum" style="font-family:var(--fdisplay);font-size:26px;font-weight:600">${BRL(tot)}</div>
+    <div style="font-size:12.5px;color:var(--ink-2)">Variação no mês: <b class="${mc>=0?'pos':'neg'}">${mc>=0?'+':''}${BRL(mc)}</b></div></div>
+    <div class="alertbox i"><div class="ai">📈</div><div><b>O que aconteceu</b><p style="color:var(--ink)">Seu patrimônio ${mc>=0?'cresceu':'recuou'} ${BRL(Math.abs(mc))} no mês. Renda fixa segurou a estabilidade, como esperado num perfil conservador.</p></div></div>
+    ${best?`<div class="alertbox i"><div class="ai">💎</div><div><b>Destaque</b><p style="color:var(--ink)">${esc(best.name)}: ${pct((best.current-best.invested)/(best.invested||1)*100)}.</p></div></div>`:''}
+    <div class="alertbox i"><div class="ai">🎯</div><div><b>Progresso</b><p style="color:var(--ink)">Você está ${(tot/S.profile.goal*100).toFixed(1)}% do caminho até o milhão.</p></div></div>
+    <div class="alertbox i"><div class="ai">💡</div><div><b>Aprendizado</b><p style="color:var(--ink)">Diversificar é construir uma carteira mais resistente — não é apostar, é distribuir.</p></div></div>`;
+  } else {
+    body=`<div class="sub">💌 Relatório mensal</div>
+    <div class="card flat">
+      <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px"><span style="color:var(--ink-2)">Patrimônio inicial</span><b class="tnum">${BRL(S.history[0]||tot)}</b></div>
+      <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px"><span style="color:var(--ink-2)">Patrimônio final</span><b class="tnum">${BRL(tot)}</b></div>
+      <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px"><span style="color:var(--ink-2)">Aportes no período</span><b class="tnum">${BRL(totalAportes)}</b></div>
+      <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px"><span style="color:var(--ink-2)">Rentabilidade 12m</span><b class="tnum ${c12>=0?'pos':'neg'}">${pct(c12)}</b></div>
+    </div>
+    ${best?`<div class="alertbox i"><div class="ai">💎</div><div><b>Melhor investimento</b><p style="color:var(--ink)">${esc(best.name)} · ${pct((best.current-best.invested)/(best.invested||1)*100)}</p></div></div>`:''}
+    ${worst&&worst!==best?`<div class="alertbox a"><div class="ai">🔎</div><div><b>Merece atenção</b><p style="color:var(--ink)">${esc(worst.name)} · ${pct((worst.current-worst.invested)/(worst.invested||1)*100)}</p></div></div>`:''}
+    <div class="alertbox i"><div class="ai">🎯</div><div><b>Rumo ao milhão</b><p style="color:var(--ink)">${(tot/S.profile.goal*100).toFixed(1)}% concluído. Faltam ${BRL(S.profile.goal-tot)}.</p></div></div>`;
+  }
+  $('#sheet').innerHTML=`<div class="grab"></div><h2>Prévia do ${kind==='semanal'?'resumo semanal':'relatório mensal'}</h2>${body}<button class="btn" style="margin-top:14px" onclick="closeSheet()">Fechar</button>`;
+  openSheet();
+}
+
+/* ---------- IA ---------- */
+let iaTab='perguntar';
+let sampleNS=undefined; // undefined=not tried, null=unavailable, obj=ready
+let aiThread=[];
+async function ensureSample(){
+  if(sampleNS!==undefined) return sampleNS;
+  try{ sampleNS = (window.claude&&claude.use)? await claude.use('sample') : null; }catch(e){ sampleNS=null; }
+  return sampleNS;
+}
+function renderIA(){
+  const html=`
+  <div class="topbar"><div class="hello">🌷 Inteligência</div></div>
+  <div class="seg">
+    <button class="${iaTab==='perguntar'?'on':''}" onclick="switchIA('perguntar')">Pergunte à IA</button>
+    <button class="${iaTab==='recomendacao'?'on':''}" onclick="switchIA('recomendacao')">Meu aporte</button>
+    <button class="${iaTab==='aprender'?'on':''}" onclick="switchIA('aprender')">Aprender</button>
+  </div>
+  <div id="ia-body"></div>`;
+  $('#screen-ia').innerHTML=html;
+  renderIABody();
+}
+function switchIA(t){ iaTab=t; renderIA(); }
+function renderIABody(){
+  const b=$('#ia-body'); if(!b)return;
+  if(iaTab==='perguntar') b.innerHTML=iaPerguntar();
+  else if(iaTab==='recomendacao') b.innerHTML=iaRecomendacao();
+  else b.innerHTML=iaAprender();
+  if(iaTab==='perguntar'){ renderThread(); ensureSample().then(updateAIStatus); }
+}
+function iaPerguntar(){
+  const sugg=['Estou muito concentrada em renda fixa?','Quanto preciso investir por mês pra chegar ao milhão em 5 anos?','Esse meu fundo multimercado ainda faz sentido?','O que aconteceu com minha carteira?'];
+  return `
+  <div class="ai-wrap">
+    <div class="ai-status" id="ai-status"></div>
+    <div id="ai-thread-holder"></div>
+    <div class="suggest-chips" id="suggest-chips">${sugg.map(s=>`<button onclick="askAI(this.textContent)">${esc(s)}</button>`).join('')}</div>
+    <div class="ai-input">
+      <textarea id="ai-q" rows="1" placeholder="Pergunte sobre a sua carteira..." oninput="autogrow(this)"></textarea>
+      <button class="ai-send" onclick="askAI()" aria-label="Enviar">➤</button>
+    </div>
+    <div class="ai-disclaimer">A IA usa os dados registrados na sua carteira e explica em linguagem simples. É conteúdo educativo, não recomendação personalizada de investimento.</div>
+  </div>`;
+}
+function renderThread(){
+  const h=$('#ai-thread-holder'); if(!h)return;
+  h.innerHTML=`<div class="ai-thread">${aiThread.map(m=>`<div class="bubble ${m.role==='user'?'me':'ai'}">${m.role==='user'?esc(m.text):formatAI(m.text)}</div>`).join('')}</div>`;
+  h.scrollIntoView&&window.scrollTo(0,document.body.scrollHeight);
+}
+function formatAI(t){ return esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>'); }
+function updateAIStatus(ns){
+  const s=$('#ai-status'); if(!s)return;
+  if(ns) s.innerHTML='🌸 IA conectada — pergunte o que quiser sobre sua carteira.';
+  else s.innerHTML='💡 A IA responde quando o app está aberto no Claude (capacidade de IA não disponível nesta visualização). Suas perguntas ficam prontas aqui.';
+}
+function portfolioContext(){
+  const bc=byClass(), bi=byInst(), s=healthScores();
+  const lines=S.holdings.map(h=>`- ${h.name} (${h.inst}, ${h.klass}): ${BRL(h.current)}`).join('\n');
+  return `Perfil: investidora conservadora, meta de R$ ${S.profile.goal.toLocaleString('pt-BR')}, aporte mensal de R$ ${S.profile.monthlyContribution.toLocaleString('pt-BR')}, rendimento estimado ${S.profile.expectedReturn}% a.a.
+Patrimônio total: ${BRL(total())} (investido ${BRL(invested())}).
+Distribuição por classe: ${Object.entries(bc).map(([k,v])=>k+' '+(v/total()*100).toFixed(0)+'%').join(', ')}.
+Por instituição: ${Object.entries(bi).map(([k,v])=>k+' '+(v/total()*100).toFixed(0)+'%').join(', ')}.
+Saúde: diversificação ${s.diversification}, liquidez ${s.liquidity}, concentração ${s.concentration}, risco ${s.risk}, adequação ${s.suit}.
+Investimentos:\n${lines}
+${S.demo?'(Estes são dados de DEMONSTRAÇÃO — avise que são fictícios se for relevante.)':''}`;
+}
+async function askAI(preset){
+  const ta=$('#ai-q'); const q=(preset||ta?.value||'').trim(); if(!q)return;
+  if(ta){ ta.value=''; autogrow(ta); }
+  aiThread.push({role:'user',text:q});
+  aiThread.push({role:'assistant',text:'…'});
+  renderThread();
+  const ns=await ensureSample();
+  if(!ns){
+    aiThread[aiThread.length-1].text='Não consigo responder nesta visualização — a IA fica ativa quando você abre o app dentro do Claude. Mas já deixei sua pergunta registrada aqui. 💗';
+    renderThread(); return;
+  }
+  const sys=`Você é a assistente do app Florescer, um app de investimentos para uma investidora conservadora brasileira. Responda em português do Brasil, de forma acolhedora, simples e feminina, como uma amiga inteligente que entende de finanças explicaria a quem não é do mercado. Nunca use jargão sem explicar. NUNCA diga apenas "compre X" — sempre analise a carteira dela, explique o porquê, o risco, a liquidez e o horizonte. Se faltarem dados, diga que faltam dados em vez de inventar. Não invente rentabilidades ou preços atuais. Seja concisa (máx ~180 palavras). Contexto da carteira dela:\n\n${portfolioContext()}`;
+  try{
+    const idx=aiThread.length-1;
+    await ns([{role:'user',content:sys+'\n\nPergunta dela: '+q}],{
+      modelTier:'default',
+      onText:({text})=>{ aiThread[idx].text=text||'…'; renderThread(); }
+    }).then(r=>{ aiThread[idx].text=r.text||aiThread[idx].text; renderThread(); });
+  }catch(e){
+    aiThread[aiThread.length-1].text = e&&e.code==='rate_limited'? 'Muitas perguntas de uma vez — espere um instante e tente de novo. 💗' : 'Tive um probleminha pra responder agora. Tente novamente em instantes.';
+    renderThread();
+  }
+}
+function autogrow(t){ t.style.height='auto'; t.style.height=Math.min(120,t.scrollHeight)+'px'; }
+
+/* ---------- carteira-alvo (target allocation) por ticker ---------- */
+const TICKER_META={
+  WRLD11:{emoji:'🌍',label:'Ações globais (mundo todo)',region:'Global — maior fatia costuma ser EUA',usOverlap:true,desc:'Replica milhares de empresas do mundo todo, de vários países. Como as maiores empresas do mundo são americanas, a maior fatia do índice acaba sendo dos EUA.'},
+  IVVB11:{emoji:'🇺🇸',label:'S&P 500 (500 maiores dos EUA)',region:'Estados Unidos',usOverlap:true,desc:'Replica as 500 maiores empresas listadas nos Estados Unidos — o índice mais usado do mundo pra medir a bolsa americana.'},
+  NASD11:{emoji:'💻',label:'Nasdaq (tecnologia dos EUA)',region:'Estados Unidos — concentrado em tecnologia',usOverlap:true,desc:'Replica a Nasdaq-100, fortemente concentrada em empresas de tecnologia americanas.'},
+  BOVA11:{emoji:'🇧🇷',label:'Ibovespa (Brasil)',region:'Brasil',usOverlap:false,desc:'Replica as maiores empresas da bolsa brasileira.'},
+  SMAL11:{emoji:'🌱',label:'Small caps (Brasil)',region:'Brasil — empresas menores',usOverlap:false,desc:'Replica empresas brasileiras de menor porte — mais voláteis, com mais espaço pra crescer.'},
+  GOLD11:{emoji:'🪙',label:'Ouro',region:'Proteção / reserva de valor',usOverlap:false,desc:'Acompanha o preço do ouro em reais. Costuma se comportar diferente das ações, o que ajuda a proteger a carteira em momentos ruins pra bolsa.'},
+};
+const TICKER_ORDER=['WRLD11','IVVB11','NASD11','BOVA11','SMAL11','GOLD11'];
+const DEFAULT_TARGET={rf:70,WRLD11:10,IVVB11:5,NASD11:3,BOVA11:4,SMAL11:3,GOLD11:5};
+function targetAllocation(){ return Object.assign({},DEFAULT_TARGET,(S.profile.targetAllocation&&typeof S.profile.targetAllocation==='object')?S.profile.targetAllocation:{}); }
+// identifica a qual ticker um holding pertence (só ETFs/ações), por substring no nome/tipo/categoria
+function tickerOf(h){
+  if(!h) return null;
+  const isEtfLike = h.klass==='ETFs' || h.type==='ETF' || h.type==='Ação';
+  if(!isEtfLike) return null;
+  const hay=((h.name||'')+' '+(h.type||'')+' '+(h.category||'')).toUpperCase();
+  for(const t of TICKER_ORDER){ if(hay.includes(t)) return t; }
+  return null;
+}
+// valor e % atuais por bucket (rf + cada ticker + Outros), sobre o total da carteira
+function currentAllocByTarget(){
+  const tot=total();
+  const val={rf:0,Outros:0}; TICKER_ORDER.forEach(t=>val[t]=0);
+  S.holdings.forEach(h=>{
+    const v=+h.current||0; const tk=tickerOf(h);
+    if(tk) val[tk]+=v;
+    else if(h.klass==='Renda Fixa'||h.klass==='Caixa') val.rf+=v;
+    else val.Outros+=v;
+  });
+  const pct={}; Object.keys(val).forEach(k=>{ pct[k]= tot? val[k]/tot*100 : 0; });
+  return {val,pct,tot};
+}
+// concentração por emissor/instituição, só em renda fixa — nunca sugere venda, só freia novos aportes ali
+function concentracaoEmissor(){
+  const tot=total(); if(!tot) return [];
+  const limit=S.profile.concLimit||15;
+  const byIssuer={};
+  S.holdings.forEach(h=>{ if(h.klass!=='Renda Fixa') return; const key=h.issuer||h.inst||'—'; byIssuer[key]=(byIssuer[key]||0)+(+h.current||0); });
+  return Object.entries(byIssuer).map(([issuer,v])=>({issuer,v,pct:v/tot*100})).filter(x=>x.pct>=limit).sort((a,b)=>b.pct-a.pct);
+}
+// radar de oportunidades — SEMPRE baseado em variação digitada por você, nunca em preço buscado automaticamente
+function radarTier(movePct){
+  if(movePct==null||isNaN(movePct)) return null;
+  const drop=-movePct; // positivo = queda de preço
+  if(drop>=15) return {level:3,emoji:'🟢🟢🟢',label:'Queda forte',msg:'Momento interessante para aumentar o aporte aqui, desde que a tese continue válida.'};
+  if(drop>=10) return {level:2,emoji:'🟢🟢',label:'Queda relevante',msg:'Direcione uma parcela maior do seu aporte pra cá.'};
+  if(drop>=5) return {level:1,emoji:'🟢',label:'Queda moderada',msg:'Continue aportando normalmente.'};
+  return null;
+}
+function iaRecomendacao(){
+  const amt=S.profile.monthlyContribution;
+  const target=targetAllocation();
+  const {pct:cur}=currentAllocByTarget();
+  const moves=S.profile.recentMoves||{};
+  const modo=!!S.profile.modoOportunidade;
+  const keys=['rf',...TICKER_ORDER];
+
+  // gap-based allocation (prioriza quem está mais abaixo da meta); Modo Oportunidade reforça quem teve queda
+  const gaps={}; let gapSum=0;
+  keys.forEach(k=>{
+    let g=Math.max(0,(target[k]||0)-(cur[k]||0));
+    if(modo && k!=='rf'){ const tier=radarTier(moves[k]); if(tier){ const boost=tier.level===3?2:tier.level===2?1.6:1.3; g=g>0? g*boost : tier.level*2.5; } }
+    gaps[k]=g; gapSum+=g;
+  });
+  const alloc={};
+  const onTarget = gapSum<=0.5;
+  if(!onTarget){ keys.forEach(k=>{ alloc[k]=Math.round((amt*gaps[k]/gapSum)/10)*10; }); }
+  else { keys.forEach(k=>{ alloc[k]=Math.round((amt*(target[k]||0)/100)/10)*10; }); } // nunca fica parado: se está tudo no alvo, mantém a proporção
+  const allocSum=keys.reduce((a,k)=>a+alloc[k],0);
+  const drift=Math.round(amt-allocSum);
+  if(drift!==0){ const biggest=keys.reduce((a,k)=>alloc[k]>=alloc[a]?k:a,keys[0]); alloc[biggest]=Math.max(0,alloc[biggest]+drift); }
+
+  const rows=keys.map(k=>{
+    const isRf=k==='rf';
+    const label=isRf?'Renda fixa':`${TICKER_META[k].emoji} ${k}`;
+    const c=cur[k]||0, t=target[k]||0, diff=c-t, a=alloc[k]||0;
+    let reason;
+    if(diff<=-0.5) reason=`${isRf?'Renda fixa':k} está ${Math.abs(diff).toFixed(0)} pontos percentuais abaixo da sua meta.`;
+    else if(diff>=3) reason=`Você está ${diff.toFixed(0)} p.p. acima da meta em ${isRf?'renda fixa':k}. Considere não direcionar novos aportes aqui até que outras classes se aproximem da meta.`;
+    else reason='Está próxima da meta — este valor mantém a proporção.';
+    if(!isRf && modo){ const tier=radarTier(moves[k]); if(tier) reason+=` ${tier.emoji} ${tier.label}: ${tier.msg}`; }
+    return {k,label,c,t,diff,a,reason,overweight:diff>=3};
+  }).sort((x,y)=> y.a-x.a || y.diff-x.diff);
+
+  const rowsHtml=rows.map(r=>`
+    <div class="card" style="padding:14px 16px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <b style="font-size:14px">${r.label}</b>
+        <b class="tnum" style="color:${r.a>0?'var(--rose)':'var(--ink-3)'};font-family:var(--fdisplay);font-size:17px">${r.a>0?BRL(r.a):'R$ 0'}</b>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-2);margin-top:4px">
+        <span>Você tem <b style="color:var(--ink)">${r.c.toFixed(0)}%</b></span><span>Meta <b style="color:var(--wine)">${r.t.toFixed(0)}%</b></span>
+      </div>
+      <div style="font-size:12.5px;color:var(--ink);margin-top:8px;line-height:1.5">${esc(r.reason)}</div>
+    </div>`).join('');
+
+  const radarRows=TICKER_ORDER.map(t=>{
+    const mv=moves[t]; const tier=mv!=null&&mv!==''?radarTier(+mv):null;
+    return `<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--line)">
+      <span style="flex:1;font-size:12.5px">${TICKER_META[t].emoji} ${t}</span>
+      <div class="box" style="padding:5px 8px;width:78px;display:flex;align-items:center"><input type="number" step="0.1" placeholder="0" value="${mv!=null?mv:''}" onchange="setRecentMove('${t}',this.value)" style="width:100%"><span style="font-size:11px">%</span></div>
+      <span style="font-size:10.5px;min-width:64px;text-align:right;color:${tier?'var(--good)':'var(--ink-3)'}">${tier?tier.emoji:'—'}</span>
+    </div>`;
+  }).join('');
+  const radarMsgs=TICKER_ORDER.map(t=>{ const mv=moves[t]; const tier=mv!=null&&mv!==''?radarTier(+mv):null; return tier?`<div style="font-size:12px;margin-top:6px"><b>${TICKER_META[t].emoji} ${t}</b> ${tier.emoji} <b>${tier.label}</b> — ${tier.msg}</div>`:''; }).join('');
+
+  const usOverlap=['WRLD11','IVVB11','NASD11'].filter(t=>(target[t]>0)||(cur[t]>0));
+  const overlapCard = usOverlap.length>=2 ? `
+  <div class="card">
+    <div class="eyebrow">🌍 Por que você tem ${usOverlap.join(' + ')}?</div>
+    <div style="font-size:12.5px;color:var(--ink);margin-top:8px;line-height:1.55">Esses ETFs se sobrepõem: todos levam a boa parte das mesmas grandes empresas americanas (Microsoft, Apple, Nvidia, Amazon...). <b>Você está aumentando deliberadamente sua exposição aos EUA</b> — isso não é um erro nem diversificação independente, é uma escolha consciente de concentrar parte da carteira lá. Vale ter isso claro pra decidir se é o que você quer.</div>
+  </div>` : '';
+
+  const conc=concentracaoEmissor();
+  const concCard = conc.length? `<div class="alertbox a"><div class="ai">🏦</div><div><b>Concentração por emissor</b><p style="color:var(--ink)">${conc.map(c=>`<b>${esc(c.issuer)}</b>: ${c.pct.toFixed(0)}% da sua carteira (${BRL(c.v)})`).join('<br>')}. Considere direcionar novos aportes para outras classes ou emissores — sem necessidade de mexer no que já está aplicado.</p></div></div>` : '';
+
+  const bigOverweight=rows.filter(r=>r.diff>=10);
+  const sellNote = bigOverweight.length
+    ? `<div class="alertbox a"><div class="ai">⚖️</div><div><b>Sobre reequilibrar por venda</b><p style="color:var(--ink)">${bigOverweight.map(r=>r.label).join(', ')} ${bigOverweight.length>1?'estão':'está'} bem acima da meta. Rebalanceamento por venda pode ser considerado se isso persistir por muitos meses — mas o caminho preferido é sempre corrigir com os próximos aportes, direcionando-os pra quem está abaixo da meta.</p></div></div>`
+    : `<div class="alertbox i"><div class="ai">⚖️</div><div><b>Nunca vendemos pra reequilibrar</b><p style="color:var(--ink)">O reequilíbrio da sua carteira acontece pelos novos aportes, nunca por venda automática. Isso evita custos, impostos e decisões apressadas.</p></div></div>`;
+
+  return `
+  <div class="card" style="background:linear-gradient(140deg,var(--surface-2),var(--surface))">
+    <div class="eyebrow">💌 O que fazer com meus ${BRL(amt)}?</div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
+      <span style="font-size:13px">Tenho</span>
+      <div class="field" style="margin:0;flex:1"><div class="box" style="padding:8px 12px"><span>R$</span><input type="number" value="${amt}" onchange="setContribution(this.value);switchIA('recomendacao')"></div></div>
+      <span style="font-size:13px">pra investir este mês.</span>
+    </div>
+    <div style="font-size:12px;color:var(--ink-2);margin-top:10px;line-height:1.5">Esse valor é sempre investido este mês — nunca fica parado esperando o "momento ideal". A distribuição abaixo prioriza o que está mais abaixo da sua meta.</div>
+    <button class="btn ghost" style="margin-top:12px" onclick="openTargetAlloc()">🎯 Editar minha carteira-alvo</button>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">🔎 Radar de oportunidades</div>
+    <div style="font-size:12px;color:var(--ink-2);margin-top:6px;line-height:1.5">Digite a variação de preço aproximada que você observou em cada ETF (ex.: -8 pra uma queda de 8%). O app <b>nunca busca preços sozinho</b> — os dados vêm de você.</div>
+    <div style="margin-top:10px">${radarRows}</div>
+    ${radarMsgs?`<div style="margin-top:6px">${radarMsgs}</div>`:''}
+    <button class="btn ${modo?'':'sec'}" style="margin-top:12px" onclick="toggleModoOportunidade()">${modo?'✅ Modo Oportunidade ativado':'⚡ Quero aproveitar uma queda'}</button>
+    ${modo?`<div style="font-size:11px;color:var(--ink-2);margin-top:8px">Esta é uma regra matemática baseada na sua estratégia, não uma previsão de mercado.</div>`:''}
+  </div>
+
+  <div class="section-title" style="margin-top:22px">💗 Sugestão deste aporte</div>
+  ${rowsHtml}
+
+  ${overlapCard}
+  ${concCard}
+  ${sellNote}
+  <div class="alertbox a"><div class="ai">⚖️</div><div><b>Importante — leia antes</b><p style="color:var(--ink)">Esta ferramenta é educacional e não constitui recomendação financeira personalizada. As sugestões seguem regras matemáticas simples (a diferença entre sua carteira-alvo e sua carteira atual) — não preveem o mercado e não garantem rentabilidade futura. Confirme preços e taxas atuais na sua corretora. A decisão final é sempre sua.</p></div></div>
+  <button class="btn" onclick="openAporte()">Registrar meu aporte 💗</button>
+  <div class="footer-note" style="text-align:center;margin-top:6px">📚 Quer entender melhor os seus ETFs? <span class="tiny-link" onclick="go('ia');setTimeout(()=>switchIA('aprender'),50)">Ir pra Aprender →</span></div>`;
+}
+let taDraft=null;
+function openTargetAlloc(){ taDraft=targetAllocation(); renderTargetAllocSheet(); openSheet(); }
+function renderTargetAllocSheet(){
+  const sum=Object.values(taDraft).reduce((a,b)=>a+(+b||0),0);
+  $('#sheet').innerHTML=`<div class="grab"></div>
+    <h2>Sua carteira-alvo</h2>
+    <div class="sub">Defina quanto cada classe deve representar da sua carteira. Isso guia as sugestões de aporte — nunca gera venda automática.</div>
+    <div class="field"><label>Renda fixa (%)</label><div class="box"><input type="number" min="0" max="100" value="${taDraft.rf}" onchange="setTaDraft('rf',this.value)"></div></div>
+    ${TICKER_ORDER.map(t=>`<div class="field"><label>${TICKER_META[t].emoji} ${t} — ${esc(TICKER_META[t].label)} (%)</label><div class="box"><input type="number" min="0" max="100" value="${taDraft[t]}" onchange="setTaDraft('${t}',this.value)"></div></div>`).join('')}
+    <div style="font-size:12.5px;font-weight:800;color:${Math.abs(sum-100)<=0.5?'var(--good)':'var(--warn)'};margin:10px 0 16px">Soma atual: ${sum.toFixed(0)}% ${Math.abs(sum-100)<=0.5?'✅':'(ideal somar 100%)'}</div>
+    <button class="btn" onclick="saveTargetAlloc()">Salvar carteira-alvo</button>
+    <button class="btn ghost" style="margin-top:8px" onclick="closeSheet()">Cancelar</button>`;
+}
+
+const EDU=[
+  {id:'cdi',ic:'📊',t:'O que é CDI?',d:'A taxa entre bancos que serve de referência pra renda fixa.',long:'O CDI (Certificado de Depósito Interbancário) é a taxa que os bancos usam pra emprestar dinheiro entre si, de um dia pro outro. Ele anda coladinho na Selic. Quando um CDB rende "110% do CDI", significa que rende 10% a mais que essa taxa de referência. É o "termômetro" da renda fixa no Brasil.'},
+  {id:'selic',ic:'🏛️',t:'O que é a Selic?',d:'A taxa básica de juros da economia brasileira.',long:'A Selic é a taxa básica definida pelo Banco Central. Ela influencia todas as outras taxas: quando sobe, a renda fixa rende mais; quando cai, investimentos de risco tendem a ficar mais atraentes. É a régua de toda a economia.'},
+  {id:'etf',ic:'🧺',t:'O que é um ETF?',d:'Uma cestinha de vários ativos negociada como uma ação.',long:'ETF é um fundo negociado em bolsa que replica um índice. Comprando 1 cota do IVVB11, por exemplo, você tem um pedacinho das 500 maiores empresas dos EUA. Diversificação instantânea, custo baixo e sem precisar escolher ação por ação.'},
+  {id:'fundo',ic:'👩‍💼',t:'O que é um fundo?',d:'Vários investidores juntam dinheiro e um gestor cuida.',long:'Num fundo, o dinheiro de várias pessoas é reunido e um gestor profissional decide onde investir, seguindo uma estratégia. Você paga uma taxa de administração por isso. Vale conferir se o desempenho justifica a taxa.'},
+  {id:'ipca',ic:'🛡️',t:'O que é IPCA+?',d:'Um investimento que protege do aumento dos preços.',long:'Títulos IPCA+ pagam a inflação (IPCA) MAIS uma taxa fixa. Assim seu dinheiro sempre ganha da inflação — ótimo pra objetivos de longo prazo, porque preserva o poder de compra.'},
+  {id:'marcacao',ic:'📈',t:'O que é marcação a mercado?',d:'Por que o valor oscila mesmo na renda fixa.',long:'É o ajuste diário do preço do título ao que o mercado pagaria por ele hoje. Por isso um título prefixado pode "cair" no meio do caminho. Se você levar até o vencimento, recebe o combinado — a oscilação some.'},
+  {id:'volatilidade',ic:'🎢',t:'O que é volatilidade?',d:'O tamanho dos altos e baixos de um investimento.',long:'Volatilidade mede o quanto um preço sobe e desce. Alta volatilidade = mais emoção e mais risco no curto prazo. Renda fixa tem baixa volatilidade; ações, alta. Combina com o seu perfil e horizonte.'},
+  {id:'diversificar',ic:'🌈',t:'O que significa diversificar?',d:'Não colocar todos os ovos na mesma cesta.',long:'Diversificar é espalhar seu dinheiro entre tipos de investimento, instituições e prazos diferentes. Se um vai mal, os outros seguram. Não elimina risco, mas deixa a carteira muito mais resistente.'},
+  {id:'rv',ic:'🌷',t:'Quando vale a pena renda variável?',d:'Depende do seu prazo e da sua tranquilidade.',long:'Renda variável (ações, ETFs) faz sentido pra dinheiro que você não vai precisar tão cedo, e quando você aguenta ver oscilações sem se desesperar. Começar aos poucos, com uma fatia pequena, é uma forma tranquila de entrar.'},
+  {id:'fgc',ic:'🔒',t:'Como funciona o FGC?',d:'A rede de proteção da renda fixa bancária.',long:'O Fundo Garantidor de Créditos protege até R$ 250 mil por CPF e por instituição, com teto de R$ 1 milhão a cada 4 anos. Cobre CDB, LCI, LCA e poupança. Por isso distribuir entre instituições aumenta sua proteção.'},
+  {id:'ir',ic:'🧾',t:'Como funciona o IR?',d:'Quanto o leão morde de cada investimento.',long:'Na renda fixa, o IR é regressivo: começa em 22,5% e cai até 15% após 2 anos. LCI/LCA e poupança são isentas. Em ações, vendas até R$ 20 mil/mês são isentas. O imposto some do rendimento, então prazo importa.'},
+];
+function iaAprender(){
+  const done=Object.keys(S.edu).length;
+  return `
+  <div class="card" style="text-align:center;background:linear-gradient(140deg,var(--surface-2),var(--surface))">
+    <div class="eyebrow">🎓 Aprenda a investir</div>
+    <div style="font-family:var(--fdisplay);font-size:18px;font-weight:600;margin-top:6px">${done} de ${EDU.length} aulas concluídas</div>
+    <div class="xpbar" style="max-width:200px;margin:8px auto 0"><i style="width:${done/EDU.length*100}%"></i></div>
+    <div style="font-size:12px;color:var(--ink-2);margin-top:6px">Cada aula te dá +50 XP 💗</div>
+  </div>
+  <div class="list">${EDU.map(e=>`<div class="edu ${S.edu[e.id]?'done':''}" onclick="openEdu('${e.id}')">
+    <div class="ei">${e.ic}</div>
+    <div class="em"><b>${esc(e.t)}</b><small>${esc(e.d)}</small></div>
+    <div class="exp">${S.edu[e.id]?'✓ feito':'+50 XP'}</div>
+  </div>`).join('')}</div>`;
+}
+function openEdu(id){
+  const e=EDU.find(x=>x.id===id); if(!e)return;
+  const already=S.edu[id];
+  $('#sheet').innerHTML=`<div class="grab"></div>
+    <div style="font-size:38px;text-align:center">${e.ic}</div>
+    <h2 style="text-align:center">${esc(e.t)}</h2>
+    <p style="font-size:14px;line-height:1.6;color:var(--ink);margin:12px 4px">${esc(e.long)}</p>
+    ${already?`<div style="text-align:center;color:var(--good);font-weight:800;margin:10px 0">✓ Aula concluída</div>`
+      :`<button class="btn" onclick="completeEdu('${id}')">Concluir aula (+50 XP) 💗</button>`}
+    <button class="btn ghost" style="margin-top:8px" onclick="closeSheet()">Fechar</button>`;
+  openSheet();
+}
+function completeEdu(id){
+  if(!S.edu[id]){ S.edu[id]=true; addXP(50); save(); renderAll(); closeSheet();
+    celebrate('Aula concluída! 🎓','Conhecimento é o melhor investimento.',50);
+  } else closeSheet();
+}
+
+/* ---------- SETTINGS ---------- */
+function openSettings(){
+  const theme=document.documentElement.getAttribute('data-theme')||'auto';
+  $('#sheet').innerHTML=`<div class="grab"></div>
+    <h2>Ajustes</h2><div class="sub">Seu app, do seu jeito.</div>
+    <div class="field"><label>Seu nome</label><div class="box"><input type="text" value="${esc(S.profile.name)}" onchange="S.profile.name=this.value;save();renderHome()"></div></div>
+    <div class="field"><label>Meta de patrimônio</label><div class="box"><span>R$</span><input type="number" value="${S.profile.goal}" onchange="S.profile.goal=+this.value||1000000;save();renderAll()"></div></div>
+    <div class="field"><label>Tema</label><div class="opts">
+      <button class="opt ${theme==='auto'?'on':''}" onclick="setTheme('auto')">Automático</button>
+      <button class="opt ${theme==='light'?'on':''}" onclick="setTheme('light')">Claro</button>
+      <button class="opt ${theme==='dark'?'on':''}" onclick="setTheme('dark')">Escuro</button>
+    </div></div>
+    <div class="alertbox i" style="margin:6px 0 14px"><div class="ai">🔒</div><div><p style="color:var(--ink);margin:0"><b>Privacidade.</b> Tudo fica só neste dispositivo (armazenamento local). Não pedimos senha, token ou login de banco. Você pode apagar tudo quando quiser.</p></div></div>
+    <button class="btn sec" onclick="confirmFresh()">Começar do zero (limpar carteira)</button>
+    <button class="btn ghost" style="margin-top:8px;color:var(--alert);border-color:var(--alert-bg)" onclick="confirmWipe()">Apagar todos os meus dados</button>
+    <button class="btn ghost" style="margin-top:8px" onclick="closeSheet()">Fechar</button>`;
+  openSheet();
+}
+window.setTheme=t=>{ if(t==='auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme',t); try{localStorage.setItem('florescer.theme',t);}catch(e){} openSettings(); };
+window.confirmFresh=()=>{ $('#sheet').innerHTML=`<div class="grab"></div><h2>Começar do zero?</h2><p style="color:var(--ink-2);font-size:13.5px;margin:8px 0 16px">Isto remove a carteira de demonstração pra você montar a sua. Suas metas continuam. Tem certeza?</p><button class="btn" onclick="startFresh();closeSheet();toast('Prontinho! Carteira zerada. 🌱')">Sim, começar do zero</button><button class="btn ghost" style="margin-top:8px" onclick="closeSheet()">Cancelar</button>`; openSheet(); };
+window.confirmWipe=()=>{ $('#sheet').innerHTML=`<div class="grab"></div><h2>Apagar tudo?</h2><p style="color:var(--ink-2);font-size:13.5px;margin:8px 0 16px">Todos os seus dados neste dispositivo serão apagados e o app volta ao estado inicial (demonstração). Não dá pra desfazer.</p><button class="btn" style="background:var(--alert)" onclick="wipeAll();closeSheet();toast('Dados apagados.')">Apagar tudo</button><button class="btn ghost" style="margin-top:8px" onclick="closeSheet()">Cancelar</button>`; openSheet(); };
+
+/* ---------- nav / sheet / toast ---------- */
+function go(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  $('#screen-'+name).classList.add('active');
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.nav===name));
+  window.scrollTo(0,0);
+}
+window.go=go;
+$('#nav').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b) go(b.dataset.nav); });
+function openSheet(){ $('#overlay').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeSheet(){ $('#overlay').classList.remove('open'); document.body.style.overflow=''; }
+window.closeSheet=closeSheet;
+$('#overlay').addEventListener('click',e=>{ if(e.target.id==='overlay') closeSheet(); });
+function toast(msg){ const t=el('div','',esc(msg)); t.style.cssText='position:fixed;bottom:calc(var(--nav-h) + 20px);left:50%;transform:translateX(-50%);background:var(--wine);color:#fff;padding:11px 18px;border-radius:999px;font-size:13px;font-weight:700;z-index:90;box-shadow:var(--shadow-lg);max-width:80%;text-align:center'; document.body.appendChild(t); setTimeout(()=>{t.style.transition='opacity .4s';t.style.opacity='0';setTimeout(()=>t.remove(),400);},2200); }
+window.toast=toast;
+function shake(sel){ const e=$(sel); if(!e)return; e.style.transition='';e.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:300}); }
+
+/* expose handlers used in inline onclick */
+Object.assign(window,{setContribution:v=>{S.profile.monthlyContribution=Math.max(0,+v||0);save();renderHome();if(iaTab==='recomendacao')renderIABody();},
+  setReturn:v=>{S.profile.expectedReturn=Math.max(0,+v||0);save();renderHome();},
+  setTaDraft:(k,v)=>{ taDraft[k]=Math.max(0,+v||0); renderTargetAllocSheet(); },
+  saveTargetAlloc:()=>{ S.profile.targetAllocation=Object.assign({},taDraft); save(); closeSheet(); if(iaTab==='recomendacao') renderIABody(); toast('Carteira-alvo atualizada 🌸'); },
+  setRecentMove:(t,v)=>{ S.profile.recentMoves=S.profile.recentMoves||{}; if(v===''||v==null) delete S.profile.recentMoves[t]; else S.profile.recentMoves[t]=+v; save(); renderIABody(); },
+  toggleModoOportunidade:()=>{ S.profile.modoOportunidade=!S.profile.modoOportunidade; save(); renderIABody(); },
+  openTargetAlloc,syncAporteFields,
+  openEditHolding,renderEditSheet,syncEditFields,saveEditHolding,confirmDeleteHolding,deleteHolding,
+  undoMyData,dismissImportBanner,
+  switchCarteira,switchPerf,switchIA,openAporte,submitAporte,handleFile,confirmImport,renderImportSheet,
+  openEdu,completeEdu,showReport,openSettings,askAI,autogrow,resetDemo,startFresh,wipeAll});
+
+/* ---------- boot ---------- */
+(function boot(){
+  try{ const t=localStorage.getItem('florescer.theme'); if(t&&t!=='auto') document.documentElement.setAttribute('data-theme',t); }catch(e){}
+  load(); ensureIds(); applyMyData(); renderAll();
+})();
+</script>
+
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').catch(function(){ /* segue funcionando normalmente sem o service worker */ });
+  });
+}
+</script>
+</body>
+</html>
